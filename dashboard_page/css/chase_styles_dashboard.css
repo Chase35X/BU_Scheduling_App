@@ -1,0 +1,51 @@
+.p-3{
+    color: white;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.friday_box{
+}
+
+.times{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.days{
+    text-align: center;
+}
+
+.col-test{
+    padding-bottom:20px;
+}
+
+.reservations, .help{
+    background-color: white;
+    border: 10px solid black;
+    color: black;
+}
+
+.reservationTitle{
+    text-align: left;
+}
+
+.reservationSlot1, .reservationSlot2{
+    text-align: right;
+}
+
+.remove{
+    border: none;
+    background-color: white;
+}
+
+/* @media(max-width: 560px){
+    .days{
+        font-size:0.80em;
+    }
+
+    .times{
+        font-size: 0.50em;
+    }
+} */
+
