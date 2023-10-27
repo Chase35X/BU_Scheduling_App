@@ -1,3 +1,31 @@
+.bold{
+    font-weight:bold;
+}
+
+.nav-link{
+    color: white;
+}
+
+.BURed{
+    background-color: rgb(204, 0, 0);
+}
+
+.borderNavBarColor{
+    border-color:rgb(0, 0, 0, 0.1);
+}
+
+.navbarColor{
+    background-color: rgb(169,169,169);
+}
+
+.latoFont{
+    font-family: 'Lato', sans-serif;
+}
+
+.titleFont{
+    font-family: 'Montserrat';
+}
+
 .p-3{
     color: white;
     border-radius: 25px;
