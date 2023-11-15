@@ -86,7 +86,7 @@ button {
 }
 
 .button_text{
-    padding: 50px;
+  padding: 20px;
 }
 
 .portfolio-item-caption{
@@ -219,7 +219,17 @@ details p {
   padding-top: 1rem;
 }
 
+.dashButton{
+  font-size:1.2rem;
+  padding: 20px;
+}
 
+
+@media screen and (max-width: 407px) {
+  .dashButton{
+    font-size: 1rem;
+  }
+}
 
 
 
