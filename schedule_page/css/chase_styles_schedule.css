@@ -57,3 +57,48 @@
         font-size: 0.50em;
     }
 } */
+
+.hall, .time{
+    text-align: center;
+}
+
+.test{
+    visibility: hidden;
+}
+
+.col-3, .test{
+    float: left;
+    text-align: center;
+}
+
+h4{
+    padding-left: 25px;
+}
+
+.mins60, .mins30{
+    padding-top: 15px;
+    text-decoration: underline;
+}
+
+.row {
+    border: solid red 3px;
+    border-radius: 25px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+button {
+    border-radius: 20px;
+    color: rgb(204, 0, 0);
+    background-color: rgb(204, 0, 0);
+    border: solid red 1px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+
+
+}
+
+button > span{
+    color: white;
+}
+

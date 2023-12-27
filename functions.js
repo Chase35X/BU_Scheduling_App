@@ -311,64 +311,128 @@ function get_dict(){
 
 }
 
-function check_availability(res_collection, reservation){
-    async function check_availability_data(res_collection, reservation){
-        var reservation_document =  await res_collection.findOne({reservation_id: reservation})
-        console.log(reservation_document)
+async function set_reservation(res_collection, reservation, user){
 
-        var reservation_status = reservation_document.status;
+    // Sets reservation for user
+    // Must check if reservation is available
+    // If not -> send error to user
+    // If yes -> set reservation, update user data, update reservation data, move to dashboard page
 
-        return new Promise((resolve) => {
-            setTimeout(() => {
-            const res = reservation_status; 
-            resolve(res);
-            }, 1000); // Simulating a delay of 1 second
-        });
+
+
+    var reservation_document =  await res_collection.findOne({reservation_id: reservation})
+    var reservation_status = reservation_document.status;
+
+    if (reservation_status){
+        // send user to error page
     }
 
-    check_availability_data(monday_reservations, 'monday-12am12:30am').then((booleanResult) => {
-        console.log(booleanResult); // Output: boolean
+    else{
+
+        var user_document = await users.findOne({email: user})
+
+        if (user_document.max_reservation > length(user_document.current_reservations)){
+            users.updateOne(
+                {email: user},
+                {$inc: {reservation_count: 1}},
+                {$push: {reservation_history: reservation}},
+                {$push: {current_reservations: reservation}}
+            )
+        }
+
+        else{
+            // send errors -> at max reservations allowed for user
+        }
+
+        
+    }
+
+    // return new Promise((resolve) => {
+    //     setTimeout(() => {
+    //     const res = reservation_status; 
+    //     resolve(res);
+    //     }, 1000); // Simulating a delay of 1 second
+    // });
+}
+
+async function remove_reservation(res_collection, reservation, user){
+
+    // Cancels reservation for user when delete icon is clicked
+    // Must check if reservation is the user's (error check for the code)
+    // If yes -> remove reservation from user data, remove reservation from reservation data, stay/refresh on dashboard page
+    // If no -> fix the code
+
+
+
+    var user_document =  await users.findOne({email: user})
+
+    var current_reservations = user_document.current_reservations
+
+    if (reservation in current_reservations){
+        users.updateOne(
+            {email: user},
+            {$pull: {current_reservations: reservation}}
+        )
+    }
+
+    else{
+        console.log('This reservation is not the users.')
+        console.log('Fix da code')
+    }
+
+
+    
+
+    // return new Promise((resolve) => {
+    //     setTimeout(() => {
+    //     const res = reservation_status; 
+    //     resolve(res);
+    //     }, 1000); // Simulating a delay of 1 second
+    // });
+}
+
+async function set_dashboard(user){
+    var user_document = await users.findOne({email: user})
+    var current_reserations = user_document.current_reserations
+    var reservation_count = user_document.reservation_count
+    var class_year = user_document.class
+    var name = user_document.name
+
+    var info_html = ""
+
+    var reservation_html = ""
+
+
+}
+
+async function set_available_reservations(res_collection, time){
+    // Used to show which reservations are available to user on schedule page
+    // updates the HTML
+
+
+}
+
+async function set_calendar(res_collection){
+    // sets reservation calendar HTML
+}
+
+
+
+
+async function check_availability_data(res_collection, reservation){
+    var reservation_document =  await res_collection.findOne({reservation_id: reservation})
+    console.log(reservation_document)
+
+    var reservation_status = reservation_document.status;
+
+    return new Promise((resolve) => {
+        setTimeout(() => {
+        const res = reservation_status; 
+        resolve(res);
+        }, 1000); // Simulating a delay of 1 second
     });
 }
 
-console.log(check_availability(monday_reservations, 'monday-12am12:30am'))
 
 
-// function check_availability(res_collection){
-
-//     available_list = []
-
-//     pull_data(res_collection).then((list_made) => {
-//         available_list = list_made
-//     })
-
-//     console.log(available_list)
-// }  
-
-// async function pull_data(res_collection){
-//     var reservations_available =  await res_collection.find({status: true}).toArray()
-
-//     console.log(reservations_available)
-    
-//     return new Promise((resolve) => {
-//         // Simulating an asynchronous operation, e.g., fetching data
-//         setTimeout(() => {
-//             const res = reservations_available; // Replace with your boolean value
-//             resolve(res);
-//         }, 1000); // Simulating a delay of 1 second
-//     });
-// }
-
-
-
-
-
-
-
-
-
-
-function set_reservation(reservation, collection){
-
-}
 

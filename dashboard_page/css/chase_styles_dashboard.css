@@ -45,7 +45,7 @@
     padding-bottom: 20px;
 }
 
-.reservations, .help{
+.reservations, .help, .userInfo{
     background-color: white;
     border: 10px solid black;
     color: black;
@@ -169,3 +169,79 @@
     top: -7px;
     left: -2px
    } 
+
+
+.circle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 10px;
+}
+
+/* Style for the circle */
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #da4f4f; /* Blue color for the circle */
+    border: solid black 1px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 10px; /* Add some space between circle and text */
+}
+
+/* Style for the description text */
+.description {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.accountInfo{
+    text-align: right;
+}
+
+.reservationContainer{
+    text-align: center;
+}
+
+#reservations-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+/* Add some margin between list items if needed */
+#reservations-list li {
+    margin-bottom: 10px;
+}
+
+#delete-btn {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #cc0000;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.0em;
+    padding: 20px;
+    width: 50%;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#delete-btn {
+    opacity: 0.5; /* Reduced opacity to make it less visible */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+/* Style for the Delete button when enabled */
+#delete-btn:not([disabled]) {
+    opacity: 1; /* Full opacity when enabled */
+    cursor: pointer; /* Change cursor to pointer when enabled */
+}

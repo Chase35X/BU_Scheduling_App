@@ -43,7 +43,7 @@
 
         <!-- Dashboard introduction content-->
         <div class="text-center mt-5">
-            <h1 class="bold">DASHBOARD PAGE</h1>
+            <h1 class="bold">Hello EMAIL</h1>
             <p class="lead under_dash_text latoFont">Below you can see your reservations and cancel them if need be.</p>
             <p class="latoFont">Get Studying...</p>
         </div>
@@ -51,12 +51,65 @@
         <!-- Reservation information -->
         <div class="container px-4">
             <div class="row gx-5">
+
+            <div class="col-test">
+                <div class="p-3 border userInfo">
+                    <h3 class="reservationTitle latoFont">Account Stats</h3>
+        
+                        <div class="container latoFont">
+                            <div class="row">
+                                <!-- <div class="col-6 reservationSlot1">
+                                    10:00AM - 11:00AM <button class="remove"><i class="gg-trash"></i></button>
+                                </div> -->
+
+                                <div class="circle-container col-6">
+                                    <div class="circle">
+                                        1 <!-- You can change this number as per your requirement -->
+                                    </div>
+                                    <div class="description">
+                                        Number of Reservations
+                                    </div>
+                                </div>
+
+                                <div class="col-6 accountInfo">
+                                    <div class="whereReserve">
+                                        <span>Kilachand Hall</span>
+                                        <br>
+                                        <b><span>Locations to Reserve</span></b>
+                                    </div>
+                                    
+                                    <hr>
+                                    <div class="accountType">
+                                        <span>User</span>
+                                        <br>
+                                        <b><span>Account Type</span></b>
+                                    </div>
+
+                                    <hr>
+                                    <div class="maxReservations">
+                                        <span>1</span>
+                                        <br>
+                                        <b><span>Max Reservations Allowed Per Week</span></b>
+                                    </div>
+                                </div>
+
+                            </div>
+        
+                            <!-- <div class="row">
+                                <div class="col-6 reservationSlot2">
+                                    10:00AM - 11:00AM <button class="remove"><i class="gg-trash"></i></button>
+                                </div>
+                            </div> -->
+                        </div>
+                </div>
+            </div>
+
               <div class="col-test">
-               <div class="p-3 border reservations">
+               <div class="p-3 border reservations row">
                 <h3 class="reservationTitle latoFont">Reservations</h3>
     
-                    <div class="container latoFont">
-                        <div class="row">
+                    <div class="container latoFont reservationContainer">
+                        <!-- <div class="row">
                             <div class="col reservationSlot1">
                                 10:00AM - 11:00AM <button class="remove"><i class="gg-trash"></i></button>
                             </div>
@@ -66,7 +119,26 @@
                             <div class="col reservationSlot2">
                                 10:00AM - 11:00AM <button class="remove"><i class="gg-trash"></i></button>
                             </div>
-                        </div>
+                        </div> -->
+
+                        <ul id="reservations-list">
+                            <li>
+                                <input type="checkbox" name="reservation" value="1" onchange="checkButtonState()">
+                                Reservation 1
+                            </li>
+                            <li>
+                                <input type="checkbox" name="reservation" value="2" onchange="checkButtonState()">
+                                Reservation 2
+                            </li>
+                            <li>
+                                <input type="checkbox" name="reservation" value="3" onchange="checkButtonState()">
+                                Reservation 3
+                            </li>
+                            <!-- Add more reservations as needed -->
+                        </ul>
+                        
+                        <!-- Delete button to remove selected reservations -->
+                        <button id="delete-btn" onclick="deleteSelected()" disabled>Delete Selected</button>
                     </div>
                </div>
               </div>
@@ -125,5 +197,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Coded JS import -->
         <script src="js/scripts.js"></script>
+        <script src="/BU_Scheduling_App/functions.js"></script>
     </body>
 </html>
