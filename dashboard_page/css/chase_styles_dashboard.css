@@ -245,3 +245,21 @@
     opacity: 1; /* Full opacity when enabled */
     cursor: pointer; /* Change cursor to pointer when enabled */
 }
+
+#khc_logo, #spark_logo{
+    height: 100px;
+    width: 100px;
+    margin:15px;
+}
+
+#khc_logo{
+    border-radius: 5px;
+}
+
+#image-container{
+    text-align: center;
+}
+
+#partnersText{
+    margin: 10px;
+}

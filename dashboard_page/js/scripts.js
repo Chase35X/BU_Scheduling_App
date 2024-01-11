@@ -29,9 +29,74 @@ function checkButtonState() {
     deleteButton.disabled = !isAtLeastOneChecked;
 }
 
-function deleteSelected() {
+async function deleteSelected() {
     // Logic to delete selected reservations goes here
     console.log("Deleting selected reservations...");
+
+    // Get all checkboxes
+    var checkboxes = document.getElementsByName('reservation');
+            
+    // Filter checked checkboxes
+    var checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+    
+    // Extract values from checked checkboxes
+    var checkedValues = checkedCheckboxes.map(checkbox => checkbox.value);
+
+    console.log(checkedValues)
+
+    for (var i = 0; i<checkedValues.length; i++){
+        var reservation_id = checkedValues[i]
+
+        var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+
+        args = '?arg1=' + reservation_id
+        url = getReservationURL + args
+        
+        let response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        const reservation = await response.json() 
+
+        var removeReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/removeReservation'
+        var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservation_id
+
+        // Find the 1 or 2 Overlays
+
+        // If reservation is 1 hour long
+        if (reservation.length == 1){
+            args += '&arg3=' + reservation.overlap[0]
+        }
+
+        // If reservation is 2 hours long
+        else{
+            args += '&arg3=' + reservation.overlap[0] + '&arg4=' + reservation.overlap[1]
+        }
+
+
+        url = removeReservationURL + args;
+    
+        const options = {
+            method: 'PUT'
+        };
+    
+        await fetch(url, options)
+            .then(response => {
+            // Handle the response
+            })
+            .catch(error => {
+            // Handle the error
+        });
+
+        location.reload()
+    }
+
+    
+    
+    
+
+
 }
 
 async function setDashboard(){
@@ -129,14 +194,28 @@ function reservationHelperFunction(reservationList){
             var split_list = reservationList[i-1].split('-')
 
             var reservation_day = split_list[0];
+            reservation_day = reservation_day.charAt(0).toUpperCase() + reservation_day.substring(1)
 
-            if 'am' in 
-            var split_list2 = split_list[1].split(/(\am)/)
-            var reservation_time = 
+            var time = split_list[1]
+            var reservation_time
 
+            if (('am'.includes(time)) && !('pm'.includes(time))) {
+                var split_list2 = time.split('am')
+                reservation_time = split_list[0] + 'am - ' + split_list[1] + 'am'
+            }
 
-            var reservationItem = 
-            reservations += '<li><input type="checkbox" name="reservation" value="' + i + '" onchange="checkButtonState()"> ' + reservationList[i-1] + '</li>'
+            else if (('pm'.includes(time)) && !('am'.includes(time))) {
+                var split_list2 = time.split('pm')
+                reservation_time = split_list[0] + 'pm - ' + split_list[1] + 'pm'
+            }
+
+            else{
+                var split_list2 = time.split('am')
+                reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'pm'
+            }
+
+            var reservationItem = reservation_day + ', ' + reservation_time
+            reservations += '<li><input type="checkbox" name="reservation" value="' + reservationList[i-1] + '" onchange="checkButtonState()">   ' + reservationItem + '</li>'
         }
 
         reservationHTML = '<ul id="reservations-list">' + reservations + '</ul><!-- Delete button to remove selected reservations --><button id="delete-btn" onclick="deleteSelected()" disabled>Delete Selected</button>'
@@ -144,5 +223,4 @@ function reservationHelperFunction(reservationList){
 
     return reservationHTML;
 }
-
 
