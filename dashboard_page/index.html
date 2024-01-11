@@ -108,7 +108,7 @@
                <div class="p-3 border reservations row">
                 <h3 class="reservationTitle latoFont">Reservations</h3>
     
-                    <div class="container latoFont reservationContainer">
+                    <div class="container latoFont reservationContainer" id="reservation-list-container">
                         <!-- <div class="row">
                             <div class="col reservationSlot1">
                                 10:00AM - 11:00AM <button class="remove"><i class="gg-trash"></i></button>
@@ -121,7 +121,7 @@
                             </div>
                         </div> -->
 
-                        <ul id="reservations-list">
+                        <!-- <ul id="reservations-list">
                             <li>
                                 <input type="checkbox" name="reservation" value="1" onchange="checkButtonState()">
                                 Reservation 1
@@ -134,8 +134,10 @@
                                 <input type="checkbox" name="reservation" value="3" onchange="checkButtonState()">
                                 Reservation 3
                             </li>
-                            <!-- Add more reservations as needed -->
-                        </ul>
+                            
+                        </ul> -->
+
+                        <p>Loading...</p>
                         
                         <!-- Delete button to remove selected reservations -->
                         <button id="delete-btn" onclick="deleteSelected()" disabled>Delete Selected</button>

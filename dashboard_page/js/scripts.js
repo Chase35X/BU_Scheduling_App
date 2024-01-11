@@ -62,6 +62,7 @@ async function setDashboard(){
     var locations = user.locations
     var accountType = user.role
     var maxReservations = user.max_reservations
+    var reservationList = user.current_reservations
 
     if (maxReservations==999)
         maxReservations = '∞'
@@ -70,11 +71,13 @@ async function setDashboard(){
     var locationDisplay = document.getElementById("location-display");
     var accountDisplay = document.getElementById("account-display");
     var maxReserveDisplay = document.getElementById("max-reserve-display");
+    var reservationListDisplay = document.getElementById("reservation-list-container")
 
     reservationDisplay.innerHTML = numReservations
     locationDisplay.innerHTML = locationHelperFunction(locations)
     accountDisplay.innerHTML = accountType
     maxReserveDisplay.innerHTML = maxReservations
+    reservationListDisplay.innerHTML = reservationHelperFunction(reservationList)
 
 
 
@@ -108,6 +111,38 @@ function locationHelperFunction(locationsList){
     }
 
     return stringDisplay
+}
+
+
+function reservationHelperFunction(reservationList){
+    var reservationHTML = ''
+
+    if (reservationList.length == 0) {
+        reservationHTML = '<p>No reservations made.</p><div class="container"><div class="row"><div class="col times"><a class="d-flex justify-content-center" href="/BU_Scheduling_App/schedule_page"><button class="buttonError" style="vertical-align:middle"><span>Schedule Page</span></button></a></div></div></div>'
+    }
+
+    else{
+
+        var reservations = ''
+
+        for (var i = 1; i<=reservationList.length; i++){
+            var split_list = reservationList[i-1].split('-')
+
+            var reservation_day = split_list[0];
+
+            if 'am' in 
+            var split_list2 = split_list[1].split(/(\am)/)
+            var reservation_time = 
+
+
+            var reservationItem = 
+            reservations += '<li><input type="checkbox" name="reservation" value="' + i + '" onchange="checkButtonState()"> ' + reservationList[i-1] + '</li>'
+        }
+
+        reservationHTML = '<ul id="reservations-list">' + reservations + '</ul><!-- Delete button to remove selected reservations --><button id="delete-btn" onclick="deleteSelected()" disabled>Delete Selected</button>'
+    }
+
+    return reservationHTML;
 }
 
 
