@@ -1,0 +1,17 @@
+
+GET http://localhost:3000/reservations
+
+###
+GET http://localhost:3000/reservations/65a062b9718579b1099b04b7
+
+###
+POST http://localhost:3000/reservations
+Content-Type: application/json
+
+{
+    "room": "Conference Room",
+    "user_email": "asijak@bu.edu"
+}
+
+###
+DELETE http://localhost:3000/reservations/65a062b9718579b1099b04b7
