@@ -58,7 +58,7 @@
     }
 } */
 
-.hall, .time{
+.hall, .time, .day{
     text-align: center;
 }
 
@@ -77,11 +77,9 @@ h4{
 
 .mins60, .mins30{
     padding-top: 15px;
-    text-decoration: underline;
 }
 
 .row {
-    border: solid red 3px;
     border-radius: 25px;
     margin-left: 5px;
     margin-right: 5px;
@@ -89,16 +87,41 @@ h4{
 
 button {
     border-radius: 20px;
-    color: rgb(204, 0, 0);
-    background-color: rgb(204, 0, 0);
+    color: rgb(226, 56, 56);
+    background-color: rgb(226, 56, 56);
     border: solid red 1px;
     margin-bottom: 15px;
     margin-top: 15px;
-
+    
 
 }
 
 button > span{
     color: white;
+}
+
+select {
+    font-size: 0.95rem;
+    padding: 0.2rem;
+    vertical-align: middle;
+}
+
+.label-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+.input-text{
+    width: 50%;
+}
+
+.crossed-out{
+    text-decoration: line-through;
+    opacity: 50%;
+}
+
+.selected {
+    border: solid black 1px;
 }
 

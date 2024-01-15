@@ -64,7 +64,7 @@
 
                                 <div class="circle-container col-6">
                                     <div class="circle" id="reservation-display">
-                                        1 <!-- You can change this number as per your requirement -->
+                                        ... <!-- You can change this number as per your requirement -->
                                     </div>
                                     <div class="description">
                                         Number of Reservations
@@ -73,23 +73,38 @@
 
                                 <div class="col-6 accountInfo">
                                     <div class="whereReserve">
-                                        <span id="location-display">Kilachand Hall</span>
+                                        <span id="location-display">Loading...</span>
                                         <br>
-                                        <b><span>Locations to Reserve</span></b>
+                                        <b>
+                                            <span>Locations to Reserve</span>
+                                            <span id="location-display" class="latoFont" data-bs-toggle="tooltip" title="This is where your account can reserve study spaces">
+                                                &#8505;
+                                            </span>
+                                        </b>
                                     </div>
                                     
                                     <hr>
                                     <div class="accountType">
-                                        <span id="account-display">User</span>
+                                        <span id="account-display">Loading...</span>
                                         <br>
-                                        <b><span>Account Type</span></b>
+                                        <b>
+                                            <span>Account Type</span>
+                                            <span id="location-display" class="latoFont" data-bs-toggle="tooltip" title="The type of account your email is associated with (typically user)">
+                                                &#8505;
+                                            </span>
+                                        </b>
                                     </div>
 
                                     <hr>
                                     <div class="maxReservations">
-                                        <span id="max-reserve-display">1</span>
+                                        <span id="max-reserve-display">Loading...</span>
                                         <br>
-                                        <b><span>Max Reservations Allowed Per Week</span></b>
+                                        <b>
+                                            <span>Max Reservations Allowed Per Week</span>
+                                            <span id="location-display" class="latoFont" data-bs-toggle="tooltip" title="This is the maximum number of reservations you can schedule per week">
+                                                &#8505;
+                                            </span>
+                                        </b>
                                     </div>
                                 </div>
 
@@ -104,7 +119,7 @@
                 </div>
             </div>
 
-              <div class="col-test">
+              <div class="col-test" id="reservationSection">
                <div class="p-3 border reservations row">
                 <h3 class="reservationTitle latoFont">Reservations</h3>
     
@@ -149,7 +164,7 @@
             <div class="col-test latoFont">
                 <div class="p-3 border help">
                     <h3 class="days">                        
-                        Having an issue?
+                        Having an issue? 
                     </h3>
     
                     <div class="container">
@@ -165,40 +180,50 @@
                 </div>
             </div>
 
-            <!-- Contact section -->
-              <div class="col-test latoFont">
-                <div class="p-3 border help">
-                    <h3 class="days">Need Help?</h3>
+            <!-- FAQ section -->
+            <div class="container d-flex align-items-center flex-column latoFont col-test">
+                <section class="faq-section text-center border">
+
+                    <h1 id="faq-title">FAQ</h1>
+
+                    <section>
+
+                        <details>
+                          <summary class="question">How often can I reserve a room?</summary>
+                          <p>
+                            Students (users) are limited to one room reservation per week. Once that reservation is fulfilled, you may reserve another.
+                          </p>
+                        </details>
+                        <details>
+                          <summary class="question">Can I cancel a reservation?</summary>
+                          <p>
+                            Yes, of course. In order to cancel a reservation click <a href="#reservationSection">here</a> and use the reservation selector and delete button. Please cancel any reservations you do not plan on attending. Others may want to use the study room!
+                          </p>
+                        </details>
+                        <details>
+                          <summary class="question">During what hours are rooms reserved?
+                          </summary>
+                          <p>
+                            Everyday during all hours rooms are allowed to be reserved. During reservation times, if a room is open you are allowed to use it, but if the reserver arrives you must leave. 
+                          </p>
+                        </details>
+                        <details>
+                          <summary class="question">What do I do if someone is in my reserved room?
+                          </summary>
+                          <p>Kindly ask the person in the study room to leave. Be prepared to show proof of your reservation through the app.</p>
+                        </details>
+                    </section>
     
-                    <div class="container">
-                        <div class="row">
-                            <div class="col times">
-                                Contact Me...
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col times">
-                                chaselen@bu.edu
-                            </div>
-                        </div>
-    
-                        <div class="row">
-                            <div class="col times">
-                                @chase_lenhart on Instagram
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
+                </section>
             </div>
 
             <br>
 
             <span id="partnersText">Partnered with...</span>
             <div id="image-container">
-                <img id="khc_logo" src="https://pbs.twimg.com/profile_images/1616491689920675840/zsEYyJXf_400x400.jpg">
-                <img id="spark_logo" src="https://www.bu.edu/spark/files/2023/08/logo.png">
+                <a href="https://www.bu.edu/khc/" target="_blank"><img id="khc_logo" src="https://pbs.twimg.com/profile_images/1616491689920675840/zsEYyJXf_400x400.jpg"></a>
+                <a href="https://www.bu.edu/spark/" target="_blank"><img id="spark_logo" src="https://www.bu.edu/spark/files/2023/08/logo.png"></a>
+                <a href="https://www.instagram.com/bu.lowerbay/" target="_blank"><img id="lbsr_logo" src="/lbsr_logo.png"></a>
             </div>
 
 
@@ -208,6 +233,7 @@
         <!-- Bootstrap JS import -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBud7TlRbs/ic4AwGcFZOxg5DpPt8EgeUIgIwzjWfXQKWA3" crossorigin="anonymous"></script>
 
         <!-- Coded JS import -->
         <script src="/database.js"></script>

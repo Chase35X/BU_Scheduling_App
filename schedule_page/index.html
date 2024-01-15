@@ -45,16 +45,40 @@
         <!-- Heading -->
         <div class="text-center mt-5">
             <h1 class="titleFont bold">RESERVE A STUDY ROOM BELOW ⬇️</h1>
-            <p class="lead latoFont">All reservations are refreshed on Sunday Night (Midnight). 2 Reservations / Week / Student</p>
+            <p class="lead latoFont">All reservations are refreshed on Sunday night or Monday night</p>
             <p class="latoFont">Version 0.1</p>
         </div>
 
-        <!-- Days for Scheduling -->
-        <h3 class="hall">Residence Hall: Kilachand Hall</h3>
-        <h3 class="time">Time Slot: 1pm</h3>
+        <!-- Inputs for Scheduling -->
+        <div class="label-container">
+            <h3 class="hall latoFont">Residence Hall: 
+                <select id="hall-select" onchange="checkInputs()">
+                    <option selected value="selection">Select a residance hall...</option>
+                    <option value="kilachand">Kilachand Hall</option>
+                    <option value="other-hall">Other Hall</option>
+                </select>
+            </h3>
+
+            <h3 class="day latoFont">Day: 
+                <select id="day-select" onchange="checkInputs()">
+                    <option selected value="selection">Select a day...</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                </select>
+            </h3>
+
+            <h3 class="time latoFont">Time Slot:
+                <select id="time-select" onchange="checkInputs()">
+                    <option selected value="selection">Select a time...</option>
+                    <option value="1:00pm">1:00pm</option>
+                    <option value="2:00pm">2:00pm</option>
+                    <option value="3:00pm">3:00pm</option>
+                </select>
+            </h3>
+        </div>
 
 
-        <h4 class="mins30 latoFont">30 Minute Reservations</h4>
+        
 
         <!-- How this will work: 
         Make all buttons for all possible time slots
@@ -68,89 +92,24 @@
         If not -> say that no reservations are available
         -->
 
+    <div id="reservation-boxes" class="row" style="display: none;">
 
-        <div class="row latoFont">
-            <div class="col-3 test">
-                <button id="12am-12:30am">
-                    <span>11:00am - 11:30pm</span>
-                </button>
-            </div>
+        <h4 class="mins30 latoFont">1 Hour Reservations</h4>
 
-            <div class="col-3">
-                <button id="12:30am-1am">
-                    <span>11:30pm - 12:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>12:00pm - 12:30pm</span>
-                </button>
-            </div>
-
-            <div class="col-3 test">
-                <button>
-                    <span>12:30pm - 1:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>1:00pm - 1:30pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>1:30pm - 2:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>2:00pm - 2:30pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>2:30pm - 3:00pm</span>
-                </button>
-            </div>
+        <div id="oneHourReservations" class="row latoFont border">
+            <p>Loading...</p>
         </div>
 
             
 
 
-        <h4 class="mins60 latoFont">60 Minute Reservations</h4>
+        <h4 class="mins60 latoFont">2 Hour Reservations</h4>
 
-        <div class="row latoFont">
-            <div class="col-3">
-                <button>
-                    <span>11:00am - 12:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>12:00pm - 1:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>1:00pm - 2:00pm</span>
-                </button>
-            </div>
-
-            <div class="col-3">
-                <button>
-                    <span>2:00pm - 3:00pm</span>
-                </button>
-            </div>
+        <div id="twoHourReservations" class="row latoFont border">
+            <p>Loading...</p>
         </div>
 
-
+    </div>
 
 
 
