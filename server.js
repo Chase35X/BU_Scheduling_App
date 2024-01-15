@@ -19,7 +19,9 @@ app.use(express.json())
 const reservationsRouter = require('./routes/reservations')
 app.use('/reservations', reservationsRouter)
 
-//
+
+
+//host all static html pages
 const publicPath = path.join(__dirname, 'public')
 app.use(express.static(publicPath));
 
@@ -34,9 +36,9 @@ folders.forEach((folder) => {
         app.use(`/${folder}`, express.static(folderPath))
         app.get(`/${folder}`, (req, res) => {
             res.sendFile(path.join(folderPath, 'index.html'))
-        });
+        })
     }
-});
+})
 
 // app.get('/', (req, res) => {
 //     res.sendFile(`${publicPath}/home_page/index.html`)
@@ -44,6 +46,9 @@ folders.forEach((folder) => {
 // app.get('/', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'home_page', 'index.html'))
 // })
+
+
+
 
 const PORT = 3000
 app.listen(PORT, ()=> console.log(`Server running on port ${PORT}`))

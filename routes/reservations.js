@@ -13,7 +13,6 @@ const Reservation = require('../models/reservation')
 
 //getting all
 router.get('/', async(req, res) => {
-    res.render()
     try{
         const reservations = await Reservation.find()
         res.json(reservations)
