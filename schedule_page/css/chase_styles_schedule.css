@@ -60,6 +60,8 @@
 
 .hall, .time, .day{
     text-align: center;
+    font-size: 0.96em;
+    font-weight: bold;
 }
 
 .test{
@@ -96,7 +98,7 @@ button {
 
 }
 
-button > span{
+button {
     color: white;
 }
 
@@ -122,6 +124,10 @@ select {
 }
 
 .selected {
-    border: solid black 1px;
+    border: solid black 3px;
+}
+
+#confirmReservation{
+    text-align: center;
 }
 

@@ -11,7 +11,15 @@ addEventListener("DOMContentLoaded", (event) => {
     timeSelect.selectedIndex = 0;
     daySelect.selectedIndex = 0;
 
-    
+    document.getElementById("reservation-boxes").style.display = "none";
+    document.getElementById("confirmReservation").style.display = "none";
+
+    var reservationButtons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < 8; i++) {
+        console.log('test')
+        reservationButtons[i].addEventListener("click", selectReservation);
+        reservationButtons[i].addEventListener("click", checkForConfirm);
+    }
 
 });
 
@@ -28,36 +36,14 @@ function checkInputs() {
         var reservationAvailability2 = getReservationAvailability(twoHourReservations)
 
         setReservationView(oneHourReservations, reservationAvailability1, twoHourReservations, reservationAvailability2)
-
-        var reservationButtons = document.getElementsByClassName("reservation-button");
-        console.log(reservationButtons)
-        console.log(reservationButtons.length)
-        console.log(reservationsPresent)
-        for (var i = 0; i < reservationsPresent; i++) {
-            console.log('test')
-            reservationButtons[i].addEventListener("click", selectReservation);
-        }
-
-        function selectReservation(event) {
-
-            event.preventDefault(); // Prevent the default behavior
-        
-            // Remove the "selected" class from all buttons
-            var buttons = document.getElementsByClassName("reservation-button");
-            for (var i = 0; i < buttons.length; i++) {
-              buttons[i].classList.remove("selected");
-            }
-        
-            console.log('here')
-          
-            // Add the "selected" class to the clicked button
-            event.target.classList.add("selected");
-        }
         
 
         document.getElementById("reservation-boxes").style.display = "block";
+        document.getElementById("confirmReservation").style.display = "block";
+        clearSelection();
     } else {
         document.getElementById("reservation-boxes").style.display = "none";
+        document.getElementById("confirmReservation").style.display = "none";
     }
 }
 
@@ -76,17 +62,25 @@ function setReservationView(reservationList, reservationAvailability1, reservati
             for(var i = 0; i<reservationList.length; i++){
                 console.log(i)
                 console.log(value[i])
+
+                var reservation_value = idToNiceDate(reservationList[i])
+                var button = document.getElementsByClassName('button1-' + i)
+                button = button[0]
+                console.log(button)
+                button.id = reservationList[i]
+                button.innerHTML = reservation_value
+
                 if(value[i] == true){
-                    oneHourHTML += '<div class="col-3"><button type="button" id="' + idToNiceDate(reservationList[i]) + '" class="reservation-button"><span>' + idToNiceDate(reservationList[i]) + '</span></button></div>'
-                    reservationsPresent+=1;
+                    
                 }
         
                 else{
-                    oneHourHTML += '<div class="col-3"><button type="button" id="' + idToNiceDate(reservationList[i]) + '" class="crossed-out" disabled><span>' + idToNiceDate(reservationList[i]) + '</span></button></div>'
+                    button.classList.add('crossed-out')
+                    button.disabled = true
                 }
             }
         
-            document.getElementById("oneHourReservations").innerHTML = oneHourHTML
+            
         }
         
         else{
@@ -103,17 +97,24 @@ function setReservationView(reservationList, reservationAvailability1, reservati
             for(var i = 0; i<reservationList2.length; i++){
                 console.log(i)
                 console.log(value2[i])
+
+                var reservation_value = idToNiceDate(reservationList2[i])
+                var button = document.getElementsByClassName('button2-' + i)
+                button = button[0]
+                console.log(button)
+                button.id = reservationList2[i]
+                button.innerHTML = reservation_value
+
+
                 if(value2[i]==true){
-                    twoHourHTML += '<div class="col-3"><button type="button" id="' + idToNiceDate(reservationList2[i]) + '" class="reservation-button"><span>' + idToNiceDate(reservationList2[i]) + '</span></button></div>'
-                    reservationsPresent+=1;
+                    
                 }
 
                 else{
-                    twoHourHTML += '<div class="col-3"><button type="button" id="' + idToNiceDate(reservationList2[i]) + '" class="crossed-out" disabled><span>' + idToNiceDate(reservationList2[i]) + '</span></button></div>'
+                    button.classList.add('crossed-out')
+                    button.disabled = true
                 }
             }
-
-            document.getElementById("twoHourReservations").innerHTML = twoHourHTML 
         }
         
         else{
@@ -471,6 +472,175 @@ function idToNiceDate(reservation_id){
 
     return reservationItem
 }
+
+function clearSelection(event) {
+
+    // Remove the "selected" class from all buttons
+    var buttons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("selected");
+    }
+
+    console.log('clear selections')
+}
+
+// Get the confirm reservation button and terms and conditions checkbox elements
+const confirmReservationButton = document.getElementById("confirm-reservation");
+const termsConditionsCheckbox = document.getElementById("terms-conditions");
+
+
+
+// Add an event listener to the confirm reservation button
+confirmReservationButton.addEventListener("click", () => {
+  // Handle the confirm reservation button click event
+  // You can add your own logic here, such as sending a request to the server to confirm the reservation
+    console.log("Reservation confirmed loading...");
+    setReservation()
+});
+
+async function setReservation(){
+    var reservationID = ''
+
+    var reservationButtons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < 8; i++) {
+        if (reservationButtons[i].classList.contains('selected')){
+            reservationID = reservationButtons[i].id
+            break
+        }
+    }
+
+    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+
+    var args = '?arg1=' + reservationID
+    url = getReservationURL + args
+
+    let response = await fetch(url)
+        .then(data => {
+            return data;
+        })           //api for the get request
+    
+    const reservation = await response.json() 
+
+    console.log(reservation)
+
+    if(reservation.status == false){
+        window.location.href = '/BU_Scheduling_App/error_page'
+    }
+
+    else{
+        var overlayList = reservation.overlap
+
+
+        var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
+        var args = '?arg1=' + localStorage.getItem('email') + '?arg2=' + reservationID + '?arg3=' + overlayList[0]
+    
+        if(overlayList[1] != ''){
+            args += '?arg4=' + overlayList[1]
+        }
+    
+        var url = setReservationURL + args
+
+        const options = {
+            method: 'PUT'
+        };
+    
+        let set_response = await fetch(url, options)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        const set_return = await set_response.json() 
+    
+        console.log(set_response)
+        console.log(set_return)
+    
+    
+        console.log('Reservcation Confirmed')
+        // window.location.href = '/BU_Scheduling_App/dashboard_page'
+    }
+}
+
+function checkForConfirm(){
+    var reservationSelected = false
+
+    var buttons = document.getElementsByClassName("reservation-button");
+
+    for (var i = 0; i < buttons.length; i++) {
+        if(buttons[i].classList.contains("selected")){
+            reservationSelected=true
+        }
+    }
+
+    var checkboxSelected = termsConditionsCheckbox.checked
+
+    if(reservationSelected && checkboxSelected){
+        confirmReservationButton.disabled = false
+        confirmReservationButton.style.opacity = 1
+    }
+
+    else{
+        confirmReservationButton.disabled = true
+        confirmReservationButton.style.opacity = 0.5
+    }
+}
+
+function selectReservation(event) {
+
+    event.preventDefault(); // Prevent the default behavior
+
+    // Remove the "selected" class from all buttons
+    var buttons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < buttons.length; i++) {
+        if (buttons[i] !== event.target)
+            buttons[i].classList.remove("selected");
+    }
+
+    console.log('here')
+  
+    // Toggle the "selected" class on the clicked button
+    event.target.classList.toggle("selected");
+
+    var reservationSelected = false;
+    if (event.target.classList.contains("selected")) {
+        reservationSelected = true;
+    }
+
+    termsConditionsCheckbox.checked = false
+
+    // Select the confirm reservation button and terms and conditions checkbox
+    confirmReservationButton.disabled = !termsConditionsCheckbox.checked || !reservationSelected;
+
+    if(confirmReservationButton.disabled){
+        confirmReservationButton.style.opacity = 0.5
+    }
+
+    else{
+        confirmReservationButton.style.opacity = 1
+    }
+}
+
+termsConditionsCheckbox.addEventListener("change", () => {
+    checkForConfirm()
+});
+
+var timeSelect = document.getElementById('time-select')
+var hallSelect = document.getElementById('hall-select')
+var daySelect = document.getElementById('day-select')
+
+timeSelect.addEventListener("change", () => {
+    termsConditionsCheckbox.checked = false
+    checkForConfirm()
+});
+
+hallSelect.addEventListener("change", () => {
+    termsConditionsCheckbox.checked = false
+    checkForConfirm()
+});
+
+daySelect.addEventListener("change", () => {
+    termsConditionsCheckbox.checked = false
+    checkForConfirm()
+});
 
 
 
