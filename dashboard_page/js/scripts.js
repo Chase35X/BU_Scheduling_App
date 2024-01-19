@@ -89,14 +89,10 @@ async function deleteSelected() {
             // Handle the error
         });
 
-        location.reload()
+        
     }
 
-    
-    
-    
-
-
+    location.reload()
 }
 
 async function setDashboard(){
@@ -227,5 +223,13 @@ function reservationHelperFunction(reservationList){
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
+})
+
+function logout(){
+    localStorage.removeItem("email");
+    window.location.href = '/BU_Scheduling_App/login_page/index.html'
+}
+
+var logoutButton = document.getElementById('logout-btn')
+logoutButton.addEventListener('click', logout);
 
