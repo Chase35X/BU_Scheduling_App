@@ -484,6 +484,17 @@ function clearSelection(event) {
     console.log('clear selections')
 }
 
+function clearCrossedOut(){
+    // Remove the "crossed-out" class from all buttons
+    var buttons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.remove("crossed-out");
+      buttons[i].disabled = false;
+    }
+
+    console.log('clear crossed-out')
+}
+
 // Get the confirm reservation button and terms and conditions checkbox elements
 const confirmReservationButton = document.getElementById("confirm-reservation");
 const termsConditionsCheckbox = document.getElementById("terms-conditions");
@@ -532,10 +543,10 @@ async function setReservation(){
 
 
         var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
-        var args = '?arg1=' + localStorage.getItem('email') + '?arg2=' + reservationID + '?arg3=' + overlayList[0]
+        var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
     
         if(overlayList[1] != ''){
-            args += '?arg4=' + overlayList[1]
+            args += '&arg4=' + overlayList[1]
         }
     
         var url = setReservationURL + args
@@ -556,7 +567,7 @@ async function setReservation(){
     
     
         console.log('Reservcation Confirmed')
-        // window.location.href = '/BU_Scheduling_App/dashboard_page'
+        window.location.href = '/BU_Scheduling_App/dashboard_page'
     }
 }
 
@@ -629,16 +640,22 @@ var daySelect = document.getElementById('day-select')
 
 timeSelect.addEventListener("change", () => {
     termsConditionsCheckbox.checked = false
+    clearSelection()
+    clearCrossedOut()
     checkForConfirm()
 });
 
 hallSelect.addEventListener("change", () => {
     termsConditionsCheckbox.checked = false
+    clearSelection()
+    clearCrossedOut()
     checkForConfirm()
 });
 
 daySelect.addEventListener("change", () => {
     termsConditionsCheckbox.checked = false
+    clearSelection()
+    clearCrossedOut()
     checkForConfirm()
 });
 
