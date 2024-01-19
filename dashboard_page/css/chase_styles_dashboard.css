@@ -234,6 +234,10 @@
     margin: 5px;
 }
 
+.logout{
+  padding: 10px;
+}
+
 #delete-btn {
     opacity: 0.5; /* Reduced opacity to make it less visible */
     cursor: not-allowed; /* Change cursor to indicate it's not clickable */
