@@ -567,7 +567,7 @@ async function setReservation(){
     
     
         console.log('Reservcation Confirmed')
-        window.location.href = '/BU_Scheduling_App/dashboard_page'
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 }
 
