@@ -63,7 +63,7 @@ function setReservationView(reservationList, reservationAvailability1, reservati
                 console.log(i)
                 console.log(value[i])
 
-                var reservation_value = idToNiceDate(reservationList[i])
+                var reservation_value = idToTime(reservationList[i])
                 var button = document.getElementsByClassName('button1-' + i)
                 button = button[0]
                 console.log(button)
@@ -98,7 +98,7 @@ function setReservationView(reservationList, reservationAvailability1, reservati
                 console.log(i)
                 console.log(value2[i])
 
-                var reservation_value = idToNiceDate(reservationList2[i])
+                var reservation_value = idToTime(reservationList2[i])
                 var button = document.getElementsByClassName('button2-' + i)
                 button = button[0]
                 console.log(button)
@@ -439,38 +439,41 @@ function add2Time(time){
         return "12:00pm"
 }
 
-function idToNiceDate(reservation_id){
+function idToTime(reservation_id){
     var split_list = reservation_id.split('-')
 
     var reservation_day = split_list[0];
     reservation_day = reservation_day.charAt(0).toUpperCase() + reservation_day.substring(1)
 
     var time = split_list[1]
-    var reservation_time
 
-    console.log(split_list)
+    return time;
 
-    if ((time.includes('am')) && !(time.includes('pm'))) {
-        var split_list2 = time.split('am')
-        reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'am'
-    }
+    // var reservation_time
 
-    else if ((time.includes('pm')) && !(time.includes('am'))) {
-        var split_list2 = time.split('pm')
-        reservation_time = split_list2[0] + 'pm - ' + split_list2[1] + 'pm'
-    }
+    // console.log(split_list)
 
-    else{
-        var split_list2 = time.split('am')
-        reservation_time = split_list2[0] + 'am - ' + split_list2[1]
-    }
+    // if ((time.includes('am')) && !(time.includes('pm'))) {
+    //     var split_list2 = time.split('am')
+    //     reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'am'
+    // }
 
-    console.log(split_list2)
-    console.log(reservation_day, ' | ', reservation_time)
+    // else if ((time.includes('pm')) && !(time.includes('am'))) {
+    //     var split_list2 = time.split('pm')
+    //     reservation_time = split_list2[0] + 'pm - ' + split_list2[1] + 'pm'
+    // }
 
-    var reservationItem = reservation_day + ', ' + reservation_time
+    // else{
+    //     var split_list2 = time.split('am')
+    //     reservation_time = split_list2[0] + 'am - ' + split_list2[1]
+    // }
 
-    return reservationItem
+    // console.log(split_list2)
+    // console.log(reservation_day, ' | ', reservation_time)
+
+    // var reservationItem = reservation_day + ', ' + reservation_time
+
+    // return reservationItem
 }
 
 function clearSelection(event) {
