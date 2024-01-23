@@ -16,7 +16,6 @@ addEventListener("DOMContentLoaded", (event) => {
 
     var reservationButtons = document.getElementsByClassName("reservation-button");
     for (var i = 0; i < 8; i++) {
-        console.log('test')
         reservationButtons[i].addEventListener("click", selectReservation);
         reservationButtons[i].addEventListener("click", checkForConfirm);
     }
@@ -48,25 +47,18 @@ function checkInputs() {
 }
 
 function setReservationView(reservationList, reservationAvailability1, reservationList2, reservationAvailability2){
-
-    console.log(reservationAvailability1)
-
     
 
     reservationAvailability1.then((value) => {
 
         if (value.includes(true)) {
-            console.log(value)
             oneHourHTML = ''
 
             for(var i = 0; i<reservationList.length; i++){
-                console.log(i)
-                console.log(value[i])
 
                 var reservation_value = idToTime(reservationList[i])
                 var button = document.getElementsByClassName('button1-' + i)
                 button = button[0]
-                console.log(button)
                 button.id = reservationList[i]
                 button.innerHTML = reservation_value
 
@@ -95,13 +87,10 @@ function setReservationView(reservationList, reservationAvailability1, reservati
             twoHourHTML = ''
 
             for(var i = 0; i<reservationList2.length; i++){
-                console.log(i)
-                console.log(value2[i])
 
                 var reservation_value = idToTime(reservationList2[i])
                 var button = document.getElementsByClassName('button2-' + i)
                 button = button[0]
-                console.log(button)
                 button.id = reservationList2[i]
                 button.innerHTML = reservation_value
 
@@ -142,13 +131,9 @@ async function getReservationAvailability(reservationList){
         
         const reservation = await response.json() 
 
-        console.log(reservation)
 
         getReservationAvailability.push(reservation.status)
     }
-
-    console.log('res list: ' + reservationList)
-    console.log('res avail list : ' + getReservationAvailability)
 
     return getReservationAvailability
 }
@@ -232,7 +217,6 @@ function get2HourReservations(time, day){
     reservationsList[2] = day_lower + '-' + reservationsList[2]
     reservationsList[3] = day_lower + '-' + reservationsList[3]
 
-    console.log(reservationsList)
 
     return reservationsList
 }
@@ -484,7 +468,6 @@ function clearSelection(event) {
       buttons[i].classList.remove("selected");
     }
 
-    console.log('clear selections')
 }
 
 function clearCrossedOut(){
@@ -494,8 +477,6 @@ function clearCrossedOut(){
       buttons[i].classList.remove("crossed-out");
       buttons[i].disabled = false;
     }
-
-    console.log('clear crossed-out')
 }
 
 // Get the confirm reservation button and terms and conditions checkbox elements
@@ -508,7 +489,6 @@ const termsConditionsCheckbox = document.getElementById("terms-conditions");
 confirmReservationButton.addEventListener("click", () => {
   // Handle the confirm reservation button click event
   // You can add your own logic here, such as sending a request to the server to confirm the reservation
-    console.log("Reservation confirmed loading...");
     setReservation()
 });
 
@@ -535,8 +515,6 @@ async function setReservation(){
     
     const reservation = await response.json() 
 
-    console.log(reservation)
-
     if(reservation.status == false){
         window.location.href = '/BU_Scheduling_App/error_page'
     }
@@ -561,15 +539,14 @@ async function setReservation(){
         let set_response = await fetch(url, options)
             .then(data => {
                 return data;
-            })           //api for the get request
+        })           //api for the get request
         
-        const set_return = await set_response.json() 
-    
-        console.log(set_response)
+
+        const set_return = await set_response.json()
         console.log(set_return)
-    
-    
-        console.log('Reservcation Confirmed')
+
+        
+
         window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 }
@@ -609,7 +586,6 @@ function selectReservation(event) {
             buttons[i].classList.remove("selected");
     }
 
-    console.log('here')
   
     // Toggle the "selected" class on the clicked button
     event.target.classList.toggle("selected");
