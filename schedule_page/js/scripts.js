@@ -558,11 +558,11 @@ function sendError(){
     var reservationButton = document.getElementById("confirm-reservation")
     var reservationError = document.getElementById("reservationError")
 
-    reservationButton.style.borderColor = 'red'
+    reservationButton.style.borderColor = 'black'
     reservationError.style.display = 'block'
 
     setTimeout(function() {
-        reservationButton.style.borderColor = 'black';
+        reservationButton.style.borderColor = 'red';
         reservationError.style.display = 'none';
     }, 5000);
 }
@@ -625,6 +625,14 @@ function selectReservation(event) {
     }
 }
 
+function clearButtonLabels(){
+    var buttons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].id = ''
+      buttons[i].value = '...'
+    }
+}
+
 termsConditionsCheckbox.addEventListener("change", () => {
     checkForConfirm()
 });
@@ -638,6 +646,7 @@ timeSelect.addEventListener("change", () => {
     clearSelection()
     clearCrossedOut()
     checkForConfirm()
+    clearButtonLabels()
 });
 
 hallSelect.addEventListener("change", () => {
@@ -645,6 +654,7 @@ hallSelect.addEventListener("change", () => {
     clearSelection()
     clearCrossedOut()
     checkForConfirm()
+    clearButtonLabels()
 });
 
 daySelect.addEventListener("change", () => {
@@ -652,6 +662,7 @@ daySelect.addEventListener("change", () => {
     clearSelection()
     clearCrossedOut()
     checkForConfirm()
+    clearButtonLabels()
 });
 
 
