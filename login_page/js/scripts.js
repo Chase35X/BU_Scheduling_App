@@ -41,6 +41,8 @@ getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/en
 
 async function login(email){
 
+    email = email.toLowerCase()
+
     args = '?arg1=' + email
     url = getUserURL + args
     
