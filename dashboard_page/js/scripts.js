@@ -197,12 +197,12 @@ function reservationHelperFunction(reservationList){
 
             if ((time.includes('am')) && !(time.includes('pm'))) {
                 var split_list2 = time.split('am')
-                reservation_time = split_list[0] + 'am - ' + split_list[1] + 'am'
+                reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'am'
             }
 
             else if ((time.includes('pm')) && !(time.includes('am'))) {
                 var split_list2 = time.split('pm')
-                reservation_time = split_list[0] + 'pm - ' + split_list[1] + 'pm'
+                reservation_time = split_list2[0] + 'pm - ' + split_list2[1] + 'pm'
             }
 
             else{

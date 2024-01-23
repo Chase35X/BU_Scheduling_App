@@ -545,10 +545,26 @@ async function setReservation(){
         const set_return = await set_response.json()
         console.log(set_return)
 
-        
 
-        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+        if (set_return.status = 500)
+            window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+
+        else
+            sendError()
     }
+}
+
+function sendError(){
+    var reservationButton = document.getElementById("confirm-reservation")
+    var reservationError = document.getElementById("reservationError")
+
+    reservationButton.style.borderColor = 'red'
+    reservationError.style.display = 'block'
+
+    setTimeout(function() {
+        reservationButton.style.borderColor = 'black';
+        reservationError.style.display = 'none';
+    }, 5000);
 }
 
 function checkForConfirm(){
