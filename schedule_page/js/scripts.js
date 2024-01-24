@@ -71,6 +71,19 @@ function setReservationView(reservationList, reservationAvailability1, reservati
                     button.disabled = true
                 }
             }
+
+            if (reservationList.length == 2){
+                var button = document.getElementsByClassName('button1-' + '2')
+                button[0].disabled = true
+
+                button = document.getElementsByClassName('button1-' + '3')
+                button[0].disabled = true
+            }
+
+            if (reservationList.length == 3){
+                var button = document.getElementsByClassName('button1-' + '3')
+                button[0].disabled = true
+            }
         
             
         }
@@ -103,6 +116,19 @@ function setReservationView(reservationList, reservationAvailability1, reservati
                     button.classList.add('crossed-out')
                     button.disabled = true
                 }
+            }
+
+            if (reservationList2.length == 2){
+                var button = document.getElementsByClassName('button2-' + '2')
+                button[0].disabled = true
+
+                button = document.getElementsByClassName('button2-' + '3')
+                button[0].disabled = true
+            }
+
+            if (reservationList2.length == 3){
+                var button = document.getElementsByClassName('button2-' + '3')
+                button[0].disabled = true
             }
         }
         
@@ -431,33 +457,31 @@ function idToTime(reservation_id){
 
     var time = split_list[1]
 
-    return time;
+    var reservation_time
 
-    // var reservation_time
+    console.log(split_list)
 
-    // console.log(split_list)
+    if ((time.includes('am')) && !(time.includes('pm'))) {
+        var split_list2 = time.split('am')
+        reservation_time = split_list2[0] + 'am <br> - <br>' + split_list2[1] + 'am'
+    }
 
-    // if ((time.includes('am')) && !(time.includes('pm'))) {
-    //     var split_list2 = time.split('am')
-    //     reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'am'
-    // }
+    else if ((time.includes('pm')) && !(time.includes('am'))) {
+        var split_list2 = time.split('pm')
+        reservation_time = split_list2[0] + 'pm <br> - <br>' + split_list2[1] + 'pm'
+    }
 
-    // else if ((time.includes('pm')) && !(time.includes('am'))) {
-    //     var split_list2 = time.split('pm')
-    //     reservation_time = split_list2[0] + 'pm - ' + split_list2[1] + 'pm'
-    // }
+    else{
+        var split_list2 = time.split('am')
+        reservation_time = split_list2[0] + 'am <br> - <br>' + split_list2[1]
+    }
 
-    // else{
-    //     var split_list2 = time.split('am')
-    //     reservation_time = split_list2[0] + 'am - ' + split_list2[1]
-    // }
+    console.log(split_list2)
+    console.log(reservation_day, ' | ', reservation_time)
 
-    // console.log(split_list2)
-    // console.log(reservation_day, ' | ', reservation_time)
+    var reservationItem = reservation_day + ', ' + reservation_time
 
-    // var reservationItem = reservation_day + ', ' + reservation_time
-
-    // return reservationItem
+    return reservation_time
 }
 
 function clearSelection(event) {
@@ -629,7 +653,7 @@ function clearButtonLabels(){
     var buttons = document.getElementsByClassName("reservation-button");
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].id = ''
-      buttons[i].value = '...'
+      buttons[i].innerHTML = '...'
     }
 }
 

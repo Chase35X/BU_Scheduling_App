@@ -84,7 +84,7 @@ h4{
 .row {
     border-radius: 25px;
     margin-left: 5px;
-    margin-right: 5px;
+    margin-right: 15px;
 }
 
 button {
@@ -132,7 +132,26 @@ select {
 }
 
 #reservationError{
-    display: block;
+    display: none;
     text-align: center;
 }
 
+.reservation-button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+  
+.reservation-button {
+    flex-basis: calc(25% - 10px); /* Adjust the width of the buttons to 25% of the container width, minus 10px for margin */
+    margin: 5px;
+}
+
+.col-3 button {
+    padding: 10px;
+}
+
+.reservationTimeInfo{
+    padding: 10px;
+}
