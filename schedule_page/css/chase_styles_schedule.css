@@ -252,3 +252,26 @@ html, body {
         font-size: 95%;
     }
 }
+
+@media (max-width: 365px){
+    .dash-text{
+      font-size: 80%
+    }
+}
+
+.bottom-navbar {
+position: fixed;
+bottom: 0;
+width: 100%;
+
+}
+
+#image-container{
+margin-bottom: 100px;
+}
+
+.dash-text{
+font-size: 80%;
+text-align: center;
+margin-left: 18px;
+}

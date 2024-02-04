@@ -232,7 +232,7 @@ function reservationHelperFunction(reservationList){
 
             console.log(split_list)
 
-            var reservationItem = reservation_location + ' Room ' + reservation_room + ', ' + reservation_day + ', ' + reservation_time
+            var reservationItem = reservation_location + ' Room ' + reservation_room + ' - ' + reservation_day + ', ' + reservation_time
             reservations += '<li><input type="checkbox" name="reservation" value="' + reservationList[i-1] + '" onchange="checkButtonState()">   ' + reservationItem + '</li>'
         }
 
