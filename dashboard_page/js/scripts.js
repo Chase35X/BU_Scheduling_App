@@ -44,6 +44,14 @@ async function deleteSelected() {
 
     console.log(checkedValues)
 
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var email = document.cookie
+        console.log(email)
+        email = email.substring(9)
+    }
+
     for (var i = 0; i<checkedValues.length; i++){
         var reservation_id = checkedValues[i]
 
@@ -63,7 +71,7 @@ async function deleteSelected() {
         const reservation = await response.json() 
 
         var removeReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/removeReservation'
-        var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservation_id
+        var args = '?arg1=' + email + '&arg2=' + reservation_id
 
         // Find the 1 or 2 Overlays
 
@@ -77,7 +85,7 @@ async function deleteSelected() {
             args += '&arg3=' + reservation.overlap[0] + '&arg4=' + reservation.overlap[1]
         }
 
-        args += '&arg2=Kilachand' + '&arg3=' + room
+        args += '&arg5=Kilachand' + '&arg6=' + room
 
 
         url = removeReservationURL + args;
@@ -219,8 +227,10 @@ function reservationHelperFunction(reservationList){
                 reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'pm'
             }
 
-            var reservation_location = reservationList[2]
-            var reservation_room = reservationList[3]
+            var reservation_location = split_list[2]
+            var reservation_room = split_list[3]
+
+            console.log(split_list)
 
             var reservationItem = reservation_location + ' Room ' + reservation_room + ', ' + reservation_day + ', ' + reservation_time
             reservations += '<li><input type="checkbox" name="reservation" value="' + reservationList[i-1] + '" onchange="checkButtonState()">   ' + reservationItem + '</li>'

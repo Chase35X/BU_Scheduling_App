@@ -418,3 +418,9 @@
     margin-left: 18px;
   }
 
+  @media (max-width: 365px){
+    .dash-text{
+      font-size: 90%
+    }
+  }
+

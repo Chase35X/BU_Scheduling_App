@@ -30,8 +30,8 @@ function checkInputs() {
   
     if (hallSelect.value !== "selection" && timeSelect.value !== "selection" && daySelect.value !== "selection") {
 
-        var oneHourReservations = get1HourReservations(timeSelect.value, daySelect.value)
-        var twoHourReservations = get2HourReservations(timeSelect.value, daySelect.value)
+        var oneHourReservations = get1HourReservations(timeSelect.value, daySelect.value, hallSelect.value)
+        var twoHourReservations = get2HourReservations(timeSelect.value, daySelect.value, hallSelect.value)
         var reservationAvailability1 = getReservationAvailability(oneHourReservations)
         var reservationAvailability2 = getReservationAvailability(twoHourReservations)
 
@@ -145,9 +145,10 @@ function setReservationView(reservationList, reservationAvailability1, reservati
 }
 
 async function getReservationAvailability(reservationList){
-    var getReservationAvailability = []
+    var getReservationAvailabilityList = []
     var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
+    console.log(reservationList)
 
     for(var i = 0; i<reservationList.length; i++){
 
@@ -155,48 +156,53 @@ async function getReservationAvailability(reservationList){
         var roomList = ['910', '911', '912']
         var reservationID = reservationList[i]
 
-        for(var i = 0; i<roomList; i++){
-            var room = roomList[i]
+        for(var k = 0; k<roomList.length; k++){
+            var room = roomList[k]
 
-            var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=' + room
+            var args = '?arg1=' + reservationID + "-" + room + '&arg2=Kilachand' + '&arg3=' + room
             url = getReservationURL + args
 
             let response = await fetch(url)
                 .then(data => {
                     return data;
-                })           //api for the get request
+            })           //api for the get request
             
-            const reservation = await response.json() 
+            var reservation = await response.json() 
+
+            console.log(response)
+            console.log(reservation)
 
 
-            if(reservation.status = true){
+            if(reservation.status == true){
                 reservation_status = true
                 break
             }
         }
 
 
-        getReservationAvailability.push(reservation_status)
+        getReservationAvailabilityList.push(reservation_status)
+        console.log(getReservationAvailabilityList)
     }
 
-    return getReservationAvailability
+    return getReservationAvailabilityList
 }
 
-function get1HourReservations(time, day){
+function get1HourReservations(time, day, hall){
 
     var day_lower = day.substring(0,1).toLowerCase() + day.substring(1)
+    var hall_lower = hall.substring(0,1).toLowerCase() + hall.substring(1)
 
     if(time == "12:00am")
-        return [day_lower + "-12:00am1:00am", day_lower + "-1:00am2:00am"]
+        return [day_lower + "-12:00am1:00am-" + hall_lower, day_lower + "-1:00am2:00am-" + hall_lower]
     
     if(time == "1:00am")
-        return [day_lower + "-12:00am1:00am", day_lower + "-1:00am2:00am", day_lower + "-2:00am3:00am"]
+        return [day_lower + "-12:00am1:00am-" + hall_lower, day_lower + "-1:00am2:00am-" + hall_lower, day_lower + "-2:00am3:00am-" + hall_lower]
 
     if(time == "12:00pm")
-        return [day_lower + "-10:00pm11:00pm", day_lower + "-11:00pm12:00pm"]
+        return [day_lower + "-10:00pm11:00pm-" + hall_lower, day_lower + "-11:00pm12:00pm-" + hall_lower]
         
     if(time == "11:00pm")
-        return [day_lower + "-9:00pm10:00pm", day_lower + "-10:00pm11:00pm", day_lower + "-11:00pm12:00pm"]
+        return [day_lower + "-9:00pm10:00pm-" + hall_lower, day_lower + "-10:00pm11:00pm-" + hall_lower, day_lower + "-11:00pm12:00pm-" + hall_lower]
 
 
     var reservationsList = [minus1Time(minus1Time(time)), minus1Time(time), add1Time(time), add1Time(add1Time(time))]
@@ -207,10 +213,10 @@ function get1HourReservations(time, day){
     reservationsList[2] = time + reservationsList[2]
     
 
-    reservationsList[0] = day_lower + '-' + reservationsList[0]
-    reservationsList[1] = day_lower + '-' + reservationsList[1]
-    reservationsList[2] = day_lower + '-' + reservationsList[2]
-    reservationsList[3] = day_lower + '-' + reservationsList[3]
+    reservationsList[0] = day_lower + '-' + reservationsList[0] + '-' + hall_lower
+    reservationsList[1] = day_lower + '-' + reservationsList[1] + '-' + hall_lower
+    reservationsList[2] = day_lower + '-' + reservationsList[2] + '-' + hall_lower
+    reservationsList[3] = day_lower + '-' + reservationsList[3] + '-' + hall_lower
 
     currentDate = new Date(); 
     currentDayOfWeek = currentDate.getDay();
@@ -219,9 +225,10 @@ function get1HourReservations(time, day){
     return reservationsList
 }
 
-function get2HourReservations(time, day){
+function get2HourReservations(time, day, hall){
 
     var day_lower = day.charAt(0).toLowerCase() + day.substring(1)
+    var hall_lower = hall.substring(0,1).toLowerCase() + hall.substring(1)
 
     if (time.length == 6){
         firstNum = time.substring(0,1)
@@ -236,16 +243,16 @@ function get2HourReservations(time, day){
     }
 
     if(time == "12:00am")
-        return [day_lower + "-12:00am2:00am", day_lower + "-2:00am4:00am"]
+        return [day_lower + "-12:00am2:00am-" + hall_lower, day_lower + "-2:00am4:00am-" + hall_lower]
     
     if(time == "2:00am")
-        return [day_lower + "-12:00am2:00am", day_lower + "-2:00am4:00am", day_lower + "-4:00am6:00am"]
+        return [day_lower + "-12:00am2:00am-" + hall_lower, day_lower + "-2:00am4:00am-" + hall_lower, day_lower + "-4:00am6:00am-" + hall_lower]
 
     if(time == "12:00pm")
-        return [day_lower + "-8:00pm10:00pm", day_lower + "-10:00pm12:00pm"]
+        return [day_lower + "-8:00pm10:00pm-" + hall_lower, day_lower + "-10:00pm12:00pm-" + hall_lower]
         
     if(time == "10:00pm")
-        return [day_lower + "-6:00pm8:00pm", day_lower + "-8:00pm10:00pm", day_lower + "-10:00pm12:00pm"]
+        return [day_lower + "-6:00pm8:00pm-" + hall_lower, day_lower + "-8:00pm10:00pm-" + hall_lower, day_lower + "-10:00pm12:00pm-" + hall_lower]
 
 
     var reservationsList = [minus2Time(minus2Time(time)), minus2Time(time), add2Time(time), add2Time(add2Time(time))]
@@ -256,10 +263,10 @@ function get2HourReservations(time, day){
     reservationsList[2] = time + reservationsList[2]
     
 
-    reservationsList[0] = day_lower + '-' + reservationsList[0]
-    reservationsList[1] = day_lower + '-' + reservationsList[1]
-    reservationsList[2] = day_lower + '-' + reservationsList[2]
-    reservationsList[3] = day_lower + '-' + reservationsList[3]
+    reservationsList[0] = day_lower + '-' + reservationsList[0] + '-' + hall_lower
+    reservationsList[1] = day_lower + '-' + reservationsList[1] + '-' + hall_lower
+    reservationsList[2] = day_lower + '-' + reservationsList[2] + '-' + hall_lower
+    reservationsList[3] = day_lower + '-' + reservationsList[3] + '-' + hall_lower
 
 
     return reservationsList
@@ -552,7 +559,7 @@ async function clearRoomSelection(reservationID){
         // Room 1
 
 
-        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=910'
+        var args = '?arg1=' + reservationID + '-910' + '&arg2=Kilachand' + '&arg3=910'
         url = getReservationURL + args
 
         let response = await fetch(url)
@@ -560,7 +567,10 @@ async function clearRoomSelection(reservationID){
                 return data;
             })           //api for the get request
         
-        const reservation = await response.json() 
+        var reservation = await response.json() 
+
+        console.log(reservation)
+        console.log(response)
 
         if (reservation.status == true){
             newHTML += '<option value="910">910</option>'
@@ -568,7 +578,7 @@ async function clearRoomSelection(reservationID){
 
         // Room 2
 
-        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=911'
+        var args = '?arg1=' + reservationID + '-911' + '&arg2=Kilachand' + '&arg3=911'
         url = getReservationURL + args
 
         response = await fetch(url)
@@ -585,7 +595,7 @@ async function clearRoomSelection(reservationID){
 
         // Room 3
 
-        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=912'
+        var args = '?arg1=' + reservationID + '-912' + '&arg2=Kilachand' + '&arg3=912'
         url = getReservationURL + args
 
         response = await fetch(url)
@@ -641,7 +651,7 @@ async function setReservation(){
     else{
         var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
-        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=' + room
+        var args = '?arg1=' + reservationID + '-' + room + '&arg2=Kilachand' + '&arg3=' + room
         url = getReservationURL + args
 
         let response = await fetch(url)
@@ -649,7 +659,7 @@ async function setReservation(){
                 return data;
             })           //api for the get request
         
-        const reservation = await response.json() 
+        var reservation = await response.json() 
 
         if(reservation.status == false){
             window.location.href = '/BU_Scheduling_App/error_page'
@@ -660,7 +670,15 @@ async function setReservation(){
 
 
             var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
-            var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
+
+            if (localStorage.getItem('email')) {
+                var email = localStorage.getItem('email')
+            } else {
+                var email = document.cookie
+                email = email.substring(9)
+            }
+
+            var args = '?arg1=' + email + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
         
             if(overlayList[1] != ''){
                 args += '&arg4=' + overlayList[1]
