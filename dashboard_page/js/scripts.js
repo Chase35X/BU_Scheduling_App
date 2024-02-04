@@ -103,15 +103,15 @@ async function deleteSelected() {
 async function setDashboard(){
     var emailDisplay = document.getElementById("email-display");
 
-    // if (localStorage.getItem('email')) {
-    //     emailDisplay.innerHTML = localStorage.getItem('email');
-    //     var email = localStorage.getItem('email')
-    // } else {
+    if (localStorage.getItem('email')) {
+        emailDisplay.innerHTML = localStorage.getItem('email');
+        var email = localStorage.getItem('email')
+    } else {
         var email = document.cookie
         console.log(email)
         email = email.substring(9)
         emailDisplay.innerHTML = email;
-    // }
+    }
 
     
 
@@ -239,6 +239,7 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 
 function logout(){
     localStorage.removeItem("email");
+    document.cookie = "username"+'=; Max-Age=-99999999;'; 
     window.location.href = '/BU_Scheduling_App/login_page/index.html'
 }
 

@@ -67,7 +67,7 @@ async function login(email){
         else{
             console.log("Found email")
             localStorage.setItem('email', email)
-            document.cookie = "username=" + email;
+            document.cookie = "username=" + email + " path=/";
             window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
         }
     }
