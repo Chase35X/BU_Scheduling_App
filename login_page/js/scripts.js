@@ -43,47 +43,57 @@ async function login(email){
 
     email = email.toLowerCase()
 
-    args = '?arg1=' + email
-    url = getUserURL + args
-    
-    let response = await fetch(url)
-        .then(data => {
-            return data;
-        })           //api for the get request
-    
-    const user = await response.json() 
-    console.log(user)
-    console.log(response)
-
-    if (user == null){
-        console.log("Email not in database.")
-        var emailBox = document.getElementById("email")
-        var emailError = document.getElementById("errorEmail")
-
-        emailBox.style.borderColor = 'red'
-        emailError.style.display = 'block'
-        emailBox.value = ""
-
-
-        setTimeout(function() {
-            emailBox.style.borderColor = 'black';
-            emailError.style.display = 'none';
-        }, 5000);
+    if (!(email.includes('@bu.edu'))){
+        sendLoginError('bu email')
     }
 
     else{
-        console.log("Found email")
-        localStorage.setItem('email', email)
-        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+        args = '?arg1=' + email
+        url = getUserURL + args
+        
+        let response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        const user = await response.json() 
+        console.log(user)
+        console.log(response)
+
+        if (user == null){
+            sendLoginError('not found')
+        }
+
+        else{
+            console.log("Found email")
+            localStorage.setItem('email', email)
+            document.cookie = "username=" + email;
+            window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+        }
     }
-    
-    
 
-    
-    
-    
-    
+}
 
+function sendLoginError(error){
+    var emailBox = document.getElementById("email")
+    var emailError = document.getElementById("errorEmail")
+
+    if(error == 'bu email'){
+        emailError.innerHTML = 'Error. Please use a BU email.'
+    }
+
+    else if(error == 'not found'){
+        emailError.innerHTML = 'Error. Email is not in database.'
+    }
+
+    emailBox.style.borderColor = 'red'
+    emailError.style.display = 'block'
+    emailBox.value = ""
+
+    setTimeout(function() {
+        emailBox.style.borderColor = 'black';
+        emailError.style.display = 'none';
+    }, 5000);
 }
 
 

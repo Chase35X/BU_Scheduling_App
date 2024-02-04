@@ -49,7 +49,10 @@ async function deleteSelected() {
 
         var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
-        args = '?arg1=' + reservation_id
+        var reservationID_list = reservation_id.split('-')
+        var room = reservationID_list[3]
+
+        args = '?arg1=' + reservation_id + '&arg2=Kilachand' + '&arg3=' + room
         url = getReservationURL + args
         
         let response = await fetch(url)
@@ -73,6 +76,8 @@ async function deleteSelected() {
         else{
             args += '&arg3=' + reservation.overlap[0] + '&arg4=' + reservation.overlap[1]
         }
+
+        args += '&arg2=Kilachand' + '&arg3=' + room
 
 
         url = removeReservationURL + args;
@@ -98,13 +103,17 @@ async function deleteSelected() {
 async function setDashboard(){
     var emailDisplay = document.getElementById("email-display");
 
-    if (localStorage.getItem('email')) {
-        emailDisplay.innerHTML = localStorage.getItem('email');
-    } else {
-        emailDisplay.innerHTML = "N/A";
-    }
+    // if (localStorage.getItem('email')) {
+    //     emailDisplay.innerHTML = localStorage.getItem('email');
+    //     var email = localStorage.getItem('email')
+    // } else {
+        var email = document.cookie
+        console.log(email)
+        email = email.substring(9)
+        emailDisplay.innerHTML = email;
+    // }
 
-    var email = localStorage.getItem('email')
+    
 
     getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
     args = '?arg1=' + email
@@ -210,7 +219,10 @@ function reservationHelperFunction(reservationList){
                 reservation_time = split_list2[0] + 'am - ' + split_list2[1] + 'pm'
             }
 
-            var reservationItem = reservation_day + ', ' + reservation_time
+            var reservation_location = reservationList[2]
+            var reservation_room = reservationList[3]
+
+            var reservationItem = reservation_location + ' Room ' + reservation_room + ', ' + reservation_day + ', ' + reservation_time
             reservations += '<li><input type="checkbox" name="reservation" value="' + reservationList[i-1] + '" onchange="checkButtonState()">   ' + reservationItem + '</li>'
         }
 

@@ -46,7 +46,7 @@
         <div class="text-center mt-5">
             <h1 class="titleFont bold">RESERVE A STUDY ROOM BELOW ⬇️</h1>
             <p class="lead latoFont reservationTimeInfo">All reservations are refreshed on Sunday night or Monday night</p>
-            <p class="latoFont">Version 0.1</p>
+            <p class="latoFont">Version 0.2</p>
         </div>
 
         <!-- Inputs for Scheduling -->
@@ -55,7 +55,6 @@
                 <select id="hall-select" onchange="checkInputs()">
                     <option selected value="selection">Select a residance hall...</option>
                     <option value="kilachand">Kilachand Hall</option>
-                    <option value="other-hall">Other Hall</option>
                 </select>
             </h3>
 
@@ -176,11 +175,30 @@
             <div class="col-3">
                 <button type="button" id="" class="reservation-button button2-3">
                     ...
-                </button>
+                </button> 
             </div>
         </div>
 
     </div>
+
+    <br>
+
+    <h3 id='room' class="room latoFont"><span id='roomTitle'>Room:</span>
+        <div id="roomSelection">
+            <select id="room-select" onchange="">
+                <option selected value="selection">Select a room...</option>
+                <option value="910">910</option>
+                <option value="911">911</option>
+                <option value="912">912</option>
+            </select>
+        </div>
+
+        <div class = 'popup-container'>
+            <div class="popup" onclick="myFunction()">Which room is which?
+                <span class="popuptext" id="myPopup">910 = large room (right) <br> 911 = small room (middle) <br> 912 = large room (left)</span>
+            </div>
+        </div>
+    </h3>
 
     <br>
 
@@ -192,6 +210,9 @@
         <br>
         <button id="confirm-reservation" disabled>Confirm Reservation</button>
     </div>
+
+    
+    
 
 
 

@@ -18,6 +18,7 @@ addEventListener("DOMContentLoaded", (event) => {
     for (var i = 0; i < 8; i++) {
         reservationButtons[i].addEventListener("click", selectReservation);
         reservationButtons[i].addEventListener("click", checkForConfirm);
+        reservationButtons[i].addEventListener("click", clearRoomSelection);
     }
 
 });
@@ -39,10 +40,12 @@ function checkInputs() {
 
         document.getElementById("reservation-boxes").style.display = "block";
         document.getElementById("confirmReservation").style.display = "block";
+        document.getElementById('room').style.display = "block";
         clearSelection();
     } else {
         document.getElementById("reservation-boxes").style.display = "none";
         document.getElementById("confirmReservation").style.display = "none";
+        document.getElementById('room').style.display = "none";
     }
 }
 
@@ -143,22 +146,37 @@ function setReservationView(reservationList, reservationAvailability1, reservati
 
 async function getReservationAvailability(reservationList){
     var getReservationAvailability = []
-    getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
 
     for(var i = 0; i<reservationList.length; i++){
-        args = '?arg1=' + reservationList[i]
-        url = getReservationURL + args
 
-        let response = await fetch(url)
-            .then(data => {
-                return data;
-            })           //api for the get request
-        
-        const reservation = await response.json() 
+        var reservation_status = false
+        var roomList = ['910', '911', '912']
+        var reservationID = reservationList[i]
+
+        for(var i = 0; i<roomList; i++){
+            var room = roomList[i]
+
+            var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=' + room
+            url = getReservationURL + args
+
+            let response = await fetch(url)
+                .then(data => {
+                    return data;
+                })           //api for the get request
+            
+            const reservation = await response.json() 
 
 
-        getReservationAvailability.push(reservation.status)
+            if(reservation.status = true){
+                reservation_status = true
+                break
+            }
+        }
+
+
+        getReservationAvailability.push(reservation_status)
     }
 
     return getReservationAvailability
@@ -503,9 +521,95 @@ function clearCrossedOut(){
     }
 }
 
+async function clearRoomSelection(reservationID){
+    // Select the dropdown element
+
+    var dropdown = document.getElementById("room-select");
+
+    // Clear existing options
+
+    dropdown.innerHTML = "";
+
+    var newHTML = '<option selected value="selection">Select a room...</option>'
+
+    var reservationID = ''
+    var reservationButtons = document.getElementsByClassName("reservation-button");
+    for (var i = 0; i < 8; i++) {
+        if (reservationButtons[i].classList.contains('selected')){
+            reservationID = reservationButtons[i].id
+            break
+        }
+    }
+
+    if (reservationID == ''){
+        dropdown.innerHTML = newHTML
+    }
+
+    else{
+        var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+
+
+        // Room 1
+
+
+        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=910'
+        url = getReservationURL + args
+
+        let response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        const reservation = await response.json() 
+
+        if (reservation.status == true){
+            newHTML += '<option value="910">910</option>'
+        }
+
+        // Room 2
+
+        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=911'
+        url = getReservationURL + args
+
+        response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        reservation = await response.json() 
+
+        if (reservation.status == true){
+            newHTML += '<option value="911">911</option>'
+        }
+
+
+        // Room 3
+
+        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=912'
+        url = getReservationURL + args
+
+        response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        reservation = await response.json() 
+
+        if (reservation.status == true){
+            newHTML += '<option value="912">912</option>'
+        }
+
+        dropdown.innerHTML = newHTML
+
+    
+    }
+
+}
+
 // Get the confirm reservation button and terms and conditions checkbox elements
 const confirmReservationButton = document.getElementById("confirm-reservation");
 const termsConditionsCheckbox = document.getElementById("terms-conditions");
+const roomSelection = document.getElementById("room-select").value;
 
 
 
@@ -518,6 +622,9 @@ confirmReservationButton.addEventListener("click", () => {
 
 async function setReservation(){
     var reservationID = ''
+    var room = ''
+
+    room = document.getElementById('room-select').value
 
     var reservationButtons = document.getElementsByClassName("reservation-button");
     for (var i = 0; i < 8; i++) {
@@ -527,60 +634,78 @@ async function setReservation(){
         }
     }
 
-    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
-
-    var args = '?arg1=' + reservationID
-    url = getReservationURL + args
-
-    let response = await fetch(url)
-        .then(data => {
-            return data;
-        })           //api for the get request
-    
-    const reservation = await response.json() 
-
-    if(reservation.status == false){
-        window.location.href = '/BU_Scheduling_App/error_page'
+    if(reservationID == '...'){
+        sendError('...')
     }
 
     else{
-        var overlayList = reservation.overlap
+        var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
+        var args = '?arg1=' + reservationID + '&arg2=Kilachand' + '&arg3=' + room
+        url = getReservationURL + args
 
-        var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
-        var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
-    
-        if(overlayList[1] != ''){
-            args += '&arg4=' + overlayList[1]
-        }
-    
-        var url = setReservationURL + args
-
-        const options = {
-            method: 'PUT'
-        };
-    
-        let set_response = await fetch(url, options)
+        let response = await fetch(url)
             .then(data => {
                 return data;
-        })           //api for the get request
+            })           //api for the get request
         
+        const reservation = await response.json() 
 
-        const set_return = await set_response.json()
-        console.log(set_return)
+        if(reservation.status == false){
+            window.location.href = '/BU_Scheduling_App/error_page'
+        }
+
+        else{
+            var overlayList = reservation.overlap
 
 
-        if (set_return.status = 500)
-            window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+            var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
+            var args = '?arg1=' + localStorage.getItem('email') + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
+        
+            if(overlayList[1] != ''){
+                args += '&arg4=' + overlayList[1]
+            }
 
-        else
-            sendError()
+            args += '&arg5=Kilachand' + '&arg6=' + room
+        
+            var url = setReservationURL + args
+
+            const options = {
+                method: 'PUT'
+            };
+        
+            let set_response = await fetch(url, options)
+                .then(data => {
+                    return data;
+            })           //api for the get request
+            
+
+            const set_return = await set_response.json()
+            console.log(set_return)
+
+
+            if (set_return.status = 500)
+                window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+
+            else
+                sendError('misc')
+        }
     }
+    
 }
 
-function sendError(){
+function sendError(error){
     var reservationButton = document.getElementById("confirm-reservation")
     var reservationError = document.getElementById("reservationError")
+
+    if(error == 'misc'){
+        reservationError.innerHTML = "An error occurred while trying to make your reservation."
+    }
+
+    else if(error == '...'){
+        reservationError.innerHTML = "Hollup. Restart the app or get a stable connection before making a reservation."
+    }
+
 
     reservationButton.style.borderColor = 'black'
     reservationError.style.display = 'block'
@@ -603,8 +728,23 @@ function checkForConfirm(){
     }
 
     var checkboxSelected = termsConditionsCheckbox.checked
+    var roomDropdown = document.getElementById("room-select")
+    console.log(roomDropdown)
+    var roomSelected = false
 
-    if(reservationSelected && checkboxSelected){
+    let selecetedIndex = roomDropdown.selectedIndex;
+    console.log("Selected index is: " + selecetedIndex);
+    let selectedOption = roomDropdown.options[selecetedIndex];
+    console.log("Selected option is: " + selectedOption.outerHTML);
+    console.log("Selected value is: " + selectedOption.value);
+    console.log("Selected text is: " + selectedOption.text);
+
+    if(selecetedIndex != 0){
+        roomSelected = true
+    }
+    
+
+    if(reservationSelected && checkboxSelected && roomSelected){
         confirmReservationButton.disabled = false
         confirmReservationButton.style.opacity = 1
     }
@@ -657,6 +797,12 @@ function clearButtonLabels(){
     }
 }
 
+// When the user clicks on <div>, open the popup
+function myFunction() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+  }
+
 termsConditionsCheckbox.addEventListener("change", () => {
     checkForConfirm()
 });
@@ -664,6 +810,7 @@ termsConditionsCheckbox.addEventListener("change", () => {
 var timeSelect = document.getElementById('time-select')
 var hallSelect = document.getElementById('hall-select')
 var daySelect = document.getElementById('day-select')
+var roomSelect = document.getElementById('room-select')
 
 timeSelect.addEventListener("change", () => {
     termsConditionsCheckbox.checked = false
@@ -687,6 +834,11 @@ daySelect.addEventListener("change", () => {
     clearCrossedOut()
     checkForConfirm()
     clearButtonLabels()
+});
+
+roomSelect.addEventListener("change", () => {
+    termsConditionsCheckbox.checked = false
+    checkForConfirm()
 });
 
 
