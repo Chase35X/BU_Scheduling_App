@@ -631,6 +631,12 @@ confirmReservationButton.addEventListener("click", () => {
 });
 
 async function setReservation(){
+
+    var confirmButton = document.getElementById('confirm-reservation')
+    confirmButton.disabled = true
+
+    
+
     var reservationID = ''
     var room = ''
 

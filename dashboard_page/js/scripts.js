@@ -1,16 +1,25 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    if (localStorage.getItem('email')) {
+        console.log(localStorage.getItem('email'))
+        setDashboard()
+    }
+
+    else{
+        window.location.href = '/BU_Scheduling_App/login_page/index.html'
+    }
+
+    
+
     const checkboxes = document.querySelectorAll('input[name="reservation"]');
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', checkButtonState);
     });
 });
 
-document.addEventListener("DOMContentLoaded", function() {
-    console.log(localStorage.getItem('email'))
-    setDashboard()
-});
+
 
 
 function checkButtonState() {
