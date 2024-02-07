@@ -4,8 +4,7 @@ var reservationsPresent=0;
 addEventListener("DOMContentLoaded", (event) => {
 
     if (localStorage.getItem('email')) {
-        console.log(localStorage.getItem('email'))
-        setDashboard()
+        console.log('logged in')
     }
 
     else{
@@ -790,6 +789,8 @@ function checkForConfirm(){
 }
 
 function selectReservation(event) {
+
+    console.log("click res")
 
     event.preventDefault(); // Prevent the default behavior
 

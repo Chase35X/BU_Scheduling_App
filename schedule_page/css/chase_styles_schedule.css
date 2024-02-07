@@ -297,3 +297,7 @@ margin-left: 18px;
 select {
     size: 1.5ex;
 }
+
+.col-3{
+    padding: 5px;
+}
