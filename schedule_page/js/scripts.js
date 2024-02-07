@@ -2,6 +2,16 @@
 var reservationsPresent=0;
 
 addEventListener("DOMContentLoaded", (event) => {
+
+    if (localStorage.getItem('email')) {
+        console.log(localStorage.getItem('email'))
+        setDashboard()
+    }
+
+    else{
+        window.location.href = '/BU_Scheduling_App/login_page/index.html'
+    }
+
     var hallSelect = document.getElementById("hall-select");
     var timeSelect = document.getElementById("time-select");
     var daySelect = document.getElementById("day-select");
@@ -635,7 +645,7 @@ async function setReservation(){
     var confirmButton = document.getElementById('confirm-reservation')
     confirmButton.disabled = true
 
-    
+
 
     var reservationID = ''
     var room = ''
