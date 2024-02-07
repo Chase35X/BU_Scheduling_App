@@ -24,6 +24,7 @@
 
 .titleFont{
     font-family: 'Montserrat';
+    padding: 10px;
 }
 
 .p-3{
@@ -263,12 +264,6 @@ html, body {
     }
 }
 
-@media (max-width: 365px){
-    .dash-text{
-      font-size: 80%
-    }
-}
-
 .bottom-navbar {
 position: fixed;
 bottom: 0;
@@ -281,7 +276,7 @@ margin-bottom: 100px;
 }
 
 .dash-text{
-font-size: 80%;
+font-size: 0.90em;
 text-align: center;
 margin-left: 18px;
 }
@@ -300,4 +295,17 @@ select {
 
 .col-3{
     padding: 5px;
+}
+
+.popup{
+    border: solid 2px rgb(255, 0, 0);
+    padding: 7px;
+    border-radius: 5px;
+    background-color: rgb(228, 86, 86);
+    color: white;
+}
+
+.popuptext-inside{
+   padding: 20px;
+   text-align: center;
 }

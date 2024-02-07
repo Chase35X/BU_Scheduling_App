@@ -413,15 +413,9 @@
   }
 
   .dash-text{
-    font-size: 80%;
+    font-size: 80em;
     text-align: center;
     margin-left: 18px;
-  }
-
-  @media (max-width: 365px){
-    .dash-text{
-      font-size: 65%
-    }
   }
 
 .bottom-navbar{
