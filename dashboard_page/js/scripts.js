@@ -258,7 +258,7 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 
 function logout(){
     localStorage.removeItem("email");
-    document.cookie = "username"+'=; Max-Age=-99999999;'; 
+    document.cookie = ""; 
     window.location.href = '/BU_Scheduling_App/login_page/index.html'
 }
 
