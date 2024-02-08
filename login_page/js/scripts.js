@@ -37,6 +37,38 @@
 //     }
 // }
 
+
+addEventListener("DOMContentLoaded", (event) => {
+
+    if (localStorage.getItem('email')) {
+        console.log('logged in')
+
+        login(localStorage.getItem('email'))
+    }
+
+
+    else if(document.cookie != null){
+        console.log(document.cookie)
+
+        cookie = document.cookie
+
+        email_list = cookie.split('=')
+
+        email = email_list[1]
+
+        console.log(email)
+
+        login(email)
+    }
+
+    else{
+        console.log('no email found in cookie or local storage')
+    }
+
+    
+
+});
+
 getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
 
 async function login(email){
