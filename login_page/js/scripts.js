@@ -43,7 +43,7 @@ addEventListener("DOMContentLoaded", (event) => {
     if (localStorage.getItem('email')) {
         console.log('logged in')
 
-        login(localStorage.getItem('email'))
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 
 
@@ -58,7 +58,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
         console.log(email)
 
-        login(email)
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 
     else{

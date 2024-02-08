@@ -7,6 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
         setDashboard()
     }
 
+    else if(document.cookie != null){
+        console.log(document.cookie)
+
+        cookie = document.cookie
+
+        email_list = cookie.split('=')
+
+        email = email_list[1]
+
+        console.log(email)
+
+        setDashboard()
+    }
+
     else{
         window.location.href = '/BU_Scheduling_App/login_page/index.html'
     }
