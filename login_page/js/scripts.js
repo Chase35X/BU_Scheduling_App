@@ -67,7 +67,13 @@ async function login(email){
         else{
             console.log("Found email")
             localStorage.setItem('email', email)
-            document.cookie = "username=" + email + " path=/";
+
+            var now = new Date();
+            var time = now.getTime();
+            var expireTime = time + 1000 * 60 * 60 * 24 * 365 // cookie expires in 1 year
+            now.setTime(expireTime);
+
+            document.cookie = "username=" + email +  ";expires=" + now.toUTCString() + ";path=/";
             window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
         }
     }
