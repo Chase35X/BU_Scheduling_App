@@ -40,6 +40,10 @@
 
 addEventListener("DOMContentLoaded", (event) => {
 
+    console.log(localStorage.getItem('email'))
+    console.log(document.cookie)
+
+
     if (localStorage.getItem('email')) {
         console.log('logged in')
 
