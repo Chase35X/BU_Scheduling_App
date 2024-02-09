@@ -1,29 +1,29 @@
 addEventListener("DOMContentLoaded", (event) => {
 
-    // if (localStorage.getItem('email')) {
-    //     console.log('logged in')
+    if (localStorage.getItem('email')) {
+        console.log('logged in')
 
-    //     window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
-    // }
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+    }
 
 
-    // else if(document.cookie != null){
-    //     console.log(document.cookie)
+    else if(document.cookie != null){
+        console.log(document.cookie)
 
-    //     cookie = document.cookie
+        cookie = document.cookie
 
-    //     email_list = cookie.split('=')
+        email_list = cookie.split('=')
 
-    //     email = email_list[1]
+        email = email_list[1]
 
-    //     console.log(email)
+        console.log(email)
 
-    //     window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
-    // }
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+    }
 
-    // else{
-    //     window.location.href = '/BU_Scheduling_App/login_page/index.html'
-    // }
+    else{
+        window.location.href = '/BU_Scheduling_App/login_page/index.html'
+    }
 
     
 
