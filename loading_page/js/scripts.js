@@ -7,7 +7,7 @@ addEventListener("DOMContentLoaded", (event) => {
     }
 
 
-    else if(document.cookie != null){
+    else if(document.cookie != ''){
         console.log(document.cookie)
 
         cookie = document.cookie
