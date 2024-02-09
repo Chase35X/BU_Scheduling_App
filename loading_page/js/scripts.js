@@ -1,5 +1,7 @@
 addEventListener("DOMContentLoaded", (event) => {
 
+    setTimeout(2000)
+    
     if (localStorage.getItem('email')) {
         console.log('logged in')
 
