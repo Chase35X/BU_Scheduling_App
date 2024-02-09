@@ -272,7 +272,7 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 
 function logout(){
     localStorage.removeItem("email");
-    document.cookie = ""; 
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     window.location.href = '/BU_Scheduling_App/login_page/index.html'
 }
 
