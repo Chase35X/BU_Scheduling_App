@@ -898,6 +898,10 @@ async function setLocations(){
             locationValue = 'myles'
         }
 
+        else{
+            locationValue = 'test'
+        }
+
         var locationString = '<option value="' + locationValue + '">' + location + '</option>'
         locationHTML += locationString
     }
