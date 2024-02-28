@@ -22,6 +22,9 @@ addEventListener("DOMContentLoaded", (event) => {
         reservationButtons[i].addEventListener("click", clearRoomSelection);
     }
 
+    // Location dropdown function that puts in the locations that users are able to reserve
+    setLocations()
+
 });
 
 function checkInputs() {
@@ -33,8 +36,8 @@ function checkInputs() {
 
         var oneHourReservations = get1HourReservations(timeSelect.value, daySelect.value, hallSelect.value)
         var twoHourReservations = get2HourReservations(timeSelect.value, daySelect.value, hallSelect.value)
-        var reservationAvailability1 = getReservationAvailability(oneHourReservations)
-        var reservationAvailability2 = getReservationAvailability(twoHourReservations)
+        var reservationAvailability1 = getReservationAvailability(oneHourReservations, hallSelect.value)
+        var reservationAvailability2 = getReservationAvailability(twoHourReservations, hallSelect.value)
 
         setReservationView(oneHourReservations, reservationAvailability1, twoHourReservations, reservationAvailability2)
         
@@ -145,22 +148,38 @@ function setReservationView(reservationList, reservationAvailability1, reservati
 
 }
 
-async function getReservationAvailability(reservationList){
+// Do this next, have function call pass location from dropdown, change requests and args for requests
+async function getReservationAvailability(reservationList, location){
     var getReservationAvailabilityList = []
-    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+
+    var getReservationURL;
+    var roomList;
+
+    var locationUpper = location.substring(0,1).toUpperCase() + location.substring(1)
+    console.log(locationUpper)
+
+
+    if(location == 'kilachand'){
+        getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+        roomList = ['910', '911', '912']
+    }
+
+    else if(location == 'myles'){
+        getReservationURL = ''
+        roomList = []
+    }
 
     console.log(reservationList)
 
     for(var i = 0; i<reservationList.length; i++){
 
         var reservation_status = false
-        var roomList = ['910', '911', '912']
         var reservationID = reservationList[i]
 
         for(var k = 0; k<roomList.length; k++){
             var room = roomList[k]
 
-            var args = '?arg1=' + reservationID + "-" + room + '&arg2=Kilachand' + '&arg3=' + room
+            var args = '?arg1=' + reservationID + "-" + room + '&arg2=' + locationUpper + '&arg3=' + room
             url = getReservationURL + args
 
             let response = await fetch(url)
@@ -529,10 +548,27 @@ function clearCrossedOut(){
     }
 }
 
-async function clearRoomSelection(reservationID){
+async function clearRoomSelection(){
     // Select the dropdown element
 
     var dropdown = document.getElementById("room-select");
+
+    var location = document.getElementById("hall-select").value;
+
+    var locationUpper = location.substring(0,1).toUpperCase() + location.substring(1)
+
+    var getReservationURL;
+    var roomList;
+
+    if(location == 'kilachand'){
+        roomList = ['910', '911', '912']
+        getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+    }
+
+    else if(location == 'myles'){
+        roomList = []
+        getReservationURL = ''
+    }
 
     // Clear existing options
 
@@ -554,60 +590,24 @@ async function clearRoomSelection(reservationID){
     }
 
     else{
-        var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
+        for(var r = 0; r<roomList.length; r++){
+            var args = '?arg1=' + reservationID + '-' + roomList[r] + '&arg2=' + locationUpper + '&arg3=' + roomList[r]
+            url = getReservationURL + args
 
-        // Room 1
-
-
-        var args = '?arg1=' + reservationID + '-910' + '&arg2=Kilachand' + '&arg3=910'
-        url = getReservationURL + args
-
-        let response = await fetch(url)
-            .then(data => {
-                return data;
+            let response = await fetch(url)
+                .then(data => {
+                    return data;
             })           //api for the get request
-        
-        var reservation = await response.json() 
+            
+            var reservation = await response.json() 
 
-        console.log(reservation)
-        console.log(response)
+            console.log(reservation)
+            console.log(response)
 
-        if (reservation.status == true){
-            newHTML += '<option value="910">910</option>'
-        }
-
-        // Room 2
-
-        var args = '?arg1=' + reservationID + '-911' + '&arg2=Kilachand' + '&arg3=911'
-        url = getReservationURL + args
-
-        response = await fetch(url)
-            .then(data => {
-                return data;
-            })           //api for the get request
-        
-        reservation = await response.json() 
-
-        if (reservation.status == true){
-            newHTML += '<option value="911">911</option>'
-        }
-
-
-        // Room 3
-
-        var args = '?arg1=' + reservationID + '-912' + '&arg2=Kilachand' + '&arg3=912'
-        url = getReservationURL + args
-
-        response = await fetch(url)
-            .then(data => {
-                return data;
-            })           //api for the get request
-        
-        reservation = await response.json() 
-
-        if (reservation.status == true){
-            newHTML += '<option value="912">912</option>'
+            if (reservation.status == true){
+                newHTML += '<option value="' + roomList[r] + '">' + roomList[r] + '</option>'
+            }
         }
 
         dropdown.innerHTML = newHTML
@@ -640,6 +640,8 @@ async function setReservation(){
 
     var reservationID = ''
     var room = ''
+    var location = document.getElementById('hall-select').value
+    var locationUpper = location.substring(0,1).toUpperCase() + location.substring(1)
 
     room = document.getElementById('room-select').value
 
@@ -651,14 +653,45 @@ async function setReservation(){
         }
     }
 
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var email = document.cookie
+        console.log(email)
+        email = email.substring(9)
+    }
+
+    getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
+    args = '?arg1=' + email
+    url = getUserURL + args
+
+    let response = await fetch(url)
+        .then(data => {
+            return data;
+        })           //api for the get request
+    
+    const user = await response.json() 
+    console.log(user)
+    console.log(response)
+
+    var numReservations = user.reservation_count
+    var locations = user.locations
+    var accountType = user.role
+    var maxReservations = user.max_reservations
+    var reservationList = user.current_reservations
+
     if(reservationID == '...'){
         sendError('...')
+    }
+
+    else if(reservationList.length >= maxReservations){
+        sendError('max_res')
     }
 
     else{
         var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
-        var args = '?arg1=' + reservationID + '-' + room + '&arg2=Kilachand' + '&arg3=' + room
+        var args = '?arg1=' + reservationID + '-' + room + '&arg2=' + locationUpper + '&arg3=' + room
         url = getReservationURL + args
 
         let response = await fetch(url)
@@ -691,7 +724,7 @@ async function setReservation(){
                 args += '&arg4=' + overlayList[1]
             }
 
-            args += '&arg5=Kilachand' + '&arg6=' + room
+            args += '&arg5=' + locationUpper + '&arg6=' + room
         
             var url = setReservationURL + args
 
@@ -709,7 +742,7 @@ async function setReservation(){
             console.log(set_return)
 
 
-            if (set_return.status = 500)
+            if (set_return.status == 200)
                 window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
 
             else
@@ -729,6 +762,10 @@ function sendError(error){
 
     else if(error == '...'){
         reservationError.innerHTML = "Hollup. Restart the app or get a stable connection before making a reservation."
+    }
+
+    else if(error == 'max_res'){
+        reservationError.innerHTML = "You are at the maximum number of reservations you can reserve." 
     }
 
 
@@ -824,6 +861,50 @@ function clearButtonLabels(){
     }
 }
 
+var user;
+async function setLocations(){
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var email = document.cookie
+        email = email.substring(9)
+    }
+
+    getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
+    args = '?arg1=' + email
+    url = getUserURL + args
+
+    let response = await fetch(url)
+        .then(data => {
+            return data;
+        })           //api for the get request
+    
+    user = await response.json();
+
+    var locationHTML = '<option selected value="selection">Select a residance hall...</option>'
+
+    var locationsList = user.locations
+
+    for(var i = 0; i<locationsList.length; i++){
+        var location = locationsList[i];
+
+        var locationValue;
+
+        if(location == 'Kilachand Hall'){
+            locationValue = 'kilachand'
+        }
+
+        else if(location == 'Myles Hall'){
+            locationValue = 'myles'
+        }
+
+        var locationString = '<option value="' + locationValue + '">' + location + '</option>'
+        locationHTML += locationString
+    }
+    
+    document.getElementById('hall-select').innerHTML = locationHTML
+}
+
 // When the user clicks on <div>, open the popup
 function myFunction() {
     var popup = document.getElementById("myPopup");
@@ -867,6 +948,8 @@ roomSelect.addEventListener("change", () => {
     termsConditionsCheckbox.checked = false
     checkForConfirm()
 });
+
+
 
 
 

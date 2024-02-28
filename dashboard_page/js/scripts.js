@@ -279,3 +279,5 @@ function logout(){
 var logoutButton = document.getElementById('logout-btn')
 logoutButton.addEventListener('click', logout);
 
+
+

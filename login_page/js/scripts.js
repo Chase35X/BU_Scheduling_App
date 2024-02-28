@@ -84,7 +84,7 @@ async function login(email){
     }
 
     else{
-        args = '?arg1=' + email
+        args = '?arg1=' + email + '&arg2=' + true
         url = getUserURL + args
         
         let response = await fetch(url)
