@@ -83,7 +83,7 @@ async function deleteSelected() {
         var reservationID_list = reservation_id.split('-')
         var room = reservationID_list[3]
 
-        args = '?arg1=' + reservation_id + '&arg2=Kilachand' + '&arg3=' + room
+        var args = '?arg1=' + reservation_id + '&arg2=Kilachand' + '&arg3=' + room
         url = getReservationURL + args
         
         let response = await fetch(url)

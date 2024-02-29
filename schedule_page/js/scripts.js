@@ -182,7 +182,7 @@ async function getReservationAvailability(reservationList, location){
             var room = roomList[k]
 
             var args = '?arg1=' + reservationID + "-" + room + '&arg2=' + locationUpper + '&arg3=' + room
-            url = getReservationURL + args
+            var url = getReservationURL + args
 
             let response = await fetch(url)
                 .then(data => {
@@ -598,7 +598,7 @@ async function clearRoomSelection(){
 
         for(var r = 0; r<roomList.length; r++){
             var args = '?arg1=' + reservationID + '-' + roomList[r] + '&arg2=' + locationUpper + '&arg3=' + roomList[r]
-            url = getReservationURL + args
+            var url = getReservationURL + args
 
             let response = await fetch(url)
                 .then(data => {
@@ -694,7 +694,7 @@ async function setReservation(){
         var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
 
         var args = '?arg1=' + reservationID + '-' + room + '&arg2=' + locationUpper + '&arg3=' + room
-        url = getReservationURL + args
+        var url = getReservationURL + args
 
         let response = await fetch(url)
             .then(data => {
