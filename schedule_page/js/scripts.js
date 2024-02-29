@@ -570,6 +570,10 @@ async function clearRoomSelection(){
         getReservationURL = ''
     }
 
+    else{
+        roomList = ['1', '2', '3']
+    }
+
     // Clear existing options
 
     dropdown.innerHTML = "";
@@ -674,9 +678,6 @@ async function setReservation(){
     console.log(user)
     console.log(response)
 
-    var numReservations = user.reservation_count
-    var locations = user.locations
-    var accountType = user.role
     var maxReservations = user.max_reservations
     var reservationList = user.current_reservations
 
