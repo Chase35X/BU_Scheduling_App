@@ -152,7 +152,7 @@ function setReservationView(reservationList, reservationAvailability1, reservati
 async function getReservationAvailability(reservationList, location){
     var getReservationAvailabilityList = []
 
-    var getReservationURL;
+    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
     var roomList;
 
     var locationUpper = location.substring(0,1).toUpperCase() + location.substring(1)
@@ -160,13 +160,15 @@ async function getReservationAvailability(reservationList, location){
 
 
     if(location == 'kilachand'){
-        getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
         roomList = ['910', '911', '912']
     }
 
     else if(location == 'myles'){
-        getReservationURL = ''
         roomList = []
+    }
+
+    else{
+        roomList = ['1', '2', '3']
     }
 
     console.log(reservationList)
@@ -557,17 +559,16 @@ async function clearRoomSelection(){
 
     var locationUpper = location.substring(0,1).toUpperCase() + location.substring(1)
 
-    var getReservationURL;
+    var getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
+
     var roomList;
 
     if(location == 'kilachand'){
         roomList = ['910', '911', '912']
-        getReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getReservation'
     }
 
     else if(location == 'myles'){
         roomList = []
-        getReservationURL = ''
     }
 
     else{
