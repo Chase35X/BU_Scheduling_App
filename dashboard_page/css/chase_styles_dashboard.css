@@ -421,3 +421,21 @@
 .bottom-navbar{
   padding-bottom: 25px;
 }
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.bottom-navbar {
+  position: sticky;
+  bottom: 0;
+  background-color: #f8f9fa;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
