@@ -75,6 +75,7 @@ async function deleteSelected() {
         email = email.substring(9)
     }
 
+    // HERE FIX FOR MULTIPLE LOCATIONS - LOCATIOSN STATED TWICE
     for (var i = 0; i<checkedValues.length; i++){
         var reservation_id = checkedValues[i]
 

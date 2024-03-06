@@ -100,6 +100,11 @@ async function login(email){
             sendLoginError('not found')
         }
 
+        else if(user.role == 'founder' || user.role == 'administrator'){
+            var passwordInput = document.getElementById('passwordInput')
+            passwordInput.style.display = 'block'
+        }
+
         else{
             console.log("Found email")
             localStorage.setItem('email', email)

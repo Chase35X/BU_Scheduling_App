@@ -265,11 +265,19 @@ html, body {
 }
 
 .bottom-navbar {
-position: fixed;
-bottom: 0;
-width: 100%;
-
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
+
+
+@media (max-width: 350px){
+    .dash-text{
+      font-size: 0.60em;
+    }
+  }
+  
 
 #image-container{
 margin-bottom: 100px;

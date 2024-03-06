@@ -192,3 +192,8 @@ input {
     display: none;
     color: red;
 }
+
+#passwordInput{
+    display: none;
+    margin-top: 10px;
+}
