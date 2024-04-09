@@ -40,19 +40,16 @@
 
 addEventListener("DOMContentLoaded", (event) => {
 
-    console.log(localStorage.getItem('email'))
-    console.log(document.cookie)
+    
 
 
     if (localStorage.getItem('email')) {
-        console.log('logged in')
 
         window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 
 
     else if(document.cookie != ''){
-        console.log(document.cookie)
 
         cookie = document.cookie
 
@@ -60,7 +57,6 @@ addEventListener("DOMContentLoaded", (event) => {
 
         email = email_list[1]
 
-        console.log(email)
 
         window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
@@ -75,7 +71,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
 getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
 
-async function login(email){
+async function login(email, password){
 
     email = email.toLowerCase()
 
@@ -93,16 +89,30 @@ async function login(email){
             })           //api for the get request
         
         const user = await response.json() 
-        console.log(user)
-        console.log(response)
+        
 
         if (user == null){
             sendLoginError('not found')
         }
 
         else if(user.role == 'founder' || user.role == 'administrator'){
-            var passwordInput = document.getElementById('passwordInput')
-            passwordInput.style.display = 'block'
+
+            var password = document.getElementById('password')
+            
+            if(password.value == ''){
+                var passwordInput = document.getElementById('password')
+                passwordInput.style.display = 'block'
+            }
+
+            else{
+                if(password.value == user.password){
+                    window.location.href = '/BU_Scheduling_App/admin_page/index.html'
+                }
+
+                else{
+                    sendLoginError('wrong pw')
+                }
+            }
         }
 
         else{
@@ -124,18 +134,28 @@ async function login(email){
 function sendLoginError(error){
     var emailBox = document.getElementById("email")
     var emailError = document.getElementById("errorEmail")
+    var passwordBox = document.getElementById("password")
 
     if(error == 'bu email'){
         emailError.innerHTML = 'Error. Please use a BU email.'
+        emailBox.style.borderColor = 'red'
+        emailError.style.display = 'block'
+        emailBox.value = ""
     }
 
     else if(error == 'not found'){
         emailError.innerHTML = 'Error. Email is not in database.'
+        emailBox.style.borderColor = 'red'
+        emailError.style.display = 'block'
+        emailBox.value = ""
     }
 
-    emailBox.style.borderColor = 'red'
-    emailError.style.display = 'block'
-    emailBox.value = ""
+    else if(error == 'wrong pw'){
+        emailError.innerHTML = 'Wrong password. Try again.'
+        passwordBox.value = ""
+        passwordBox.style.borderColor = 'red'
+        emailError.style.display = 'block'
+    }
 
     setTimeout(function() {
         emailBox.style.borderColor = 'black';

@@ -193,7 +193,11 @@ input {
     color: red;
 }
 
-#passwordInput{
+#password{
     display: none;
     margin-top: 10px;
+}
+
+#pwContainer{
+    text-align: center;
 }

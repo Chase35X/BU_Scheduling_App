@@ -22,12 +22,22 @@ addEventListener("DOMContentLoaded", (event) => {
         reservationButtons[i].addEventListener("click", clearRoomSelection);
     }
 
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var email = document.cookie
+        console.log(email)
+        email = email.substring(9)
+    }
+
+    document.getElementById('emailSelect').innerHTML = '<option value=' + email + '>' + email + ' (your own email)' + '</option>'
+
     // Location dropdown function that puts in the locations that users are able to reserve
     setLocations()
 
 });
 
-function checkInputs() {
+async function checkInputs() {
     var hallSelect = document.getElementById("hall-select");
     var timeSelect = document.getElementById("time-select");
     var daySelect = document.getElementById("day-select");
@@ -46,10 +56,35 @@ function checkInputs() {
         document.getElementById("confirmReservation").style.display = "block";
         document.getElementById('room').style.display = "block";
         clearSelection();
+
+        if (localStorage.getItem('email')) {
+            var email = localStorage.getItem('email')
+        } else {
+            var email = document.cookie
+            console.log(email)
+            email = email.substring(9)
+        }
+
+        getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
+        args = '?arg1=' + email
+        url = getUserURL + args
+
+        let response = await fetch(url)
+            .then(data => {
+                return data;
+            })           //api for the get request
+        
+        const user = await response.json() 
+        var accountType = user.role;
+
+        if(accountType == "admin" || accountType == "founder"){
+            document.getElementById("emailSelection").style.display = "block";
+        }
     } else {
         document.getElementById("reservation-boxes").style.display = "none";
         document.getElementById("confirmReservation").style.display = "none";
         document.getElementById('room').style.display = "none";
+        document.getElementById("emailSelection").style.display = "none";
     }
 }
 
@@ -626,6 +661,7 @@ async function clearRoomSelection(){
 const confirmReservationButton = document.getElementById("confirm-reservation");
 const termsConditionsCheckbox = document.getElementById("terms-conditions");
 const roomSelection = document.getElementById("room-select").value;
+const emailInput = document.getElementById('emailSelection');
 
 
 
@@ -681,12 +717,13 @@ async function setReservation(){
 
     var maxReservations = user.max_reservations
     var reservationList = user.current_reservations
+    var role = user.role
 
     if(reservationID == '...'){
         sendError('...')
     }
 
-    else if(reservationList.length >= maxReservations){
+    else if((reservationList.length >= maxReservations) && (role!= 'admin' || role!='founder')){
         sendError('max_res')
     }
 
@@ -712,13 +749,20 @@ async function setReservation(){
 
 
             var setReservationURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/setReservation'
-
-            if (localStorage.getItem('email')) {
-                var email = localStorage.getItem('email')
-            } else {
-                var email = document.cookie
-                email = email.substring(9)
+        
+            if(role == "admin" || role == "founder"){
+                var email = document.getElementById('emailSelect').value
             }
+
+            else{
+                if (localStorage.getItem('email')) {
+                    var email = localStorage.getItem('email')
+                } else {
+                    var email = document.cookie
+                    email = email.substring(9)
+                }
+            }
+            
 
             var args = '?arg1=' + email + '&arg2=' + reservationID + '&arg3=' + overlayList[0]
         
@@ -911,11 +955,37 @@ async function setLocations(){
     document.getElementById('hall-select').innerHTML = locationHTML
 }
 
+async function getAllEmails(){
+    var allDataURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/allData'
+    url = allDataURL
+
+    let response = await fetch(url)
+        .then(data => {
+            return data;
+    })           //api for the get request
+    
+    const allData = await response.json() 
+
+    const users = allData.user_doc
+    var emails = [];
+
+    console.log(users)
+
+    for(var e = 0; e<users.length;e++) {
+        console.log(users[e].email);
+        emails.push(users[e].email);
+    }
+
+    console.log(emails);
+    
+    return emails;
+}
+
 // When the user clicks on <div>, open the popup
 function myFunction() {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
-  }
+}
 
 termsConditionsCheckbox.addEventListener("change", () => {
     checkForConfirm()
@@ -955,7 +1025,35 @@ roomSelect.addEventListener("change", () => {
     checkForConfirm()
 });
 
+async function onEmailChange(){
+    var emails = await getAllEmails();
+    var emailInput = document.getElementById('emailInput').value
 
+    var emailList = [];
 
+    for(var e = 0; e<emails.length;e++) {
+        if(emails[e].includes(emailInput)) {
+            emailList.push(emails[e])
+        }
+    }
 
+    console.log(emailList)
+
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var email = document.cookie
+        console.log(email)
+        email = email.substring(9)
+    }
+
+    emailDropdownHTML = '<selection><option value=' + email + '>' + email + ' (your own email)</option>'
+    for(var i=0;i<emailList.length;i++){
+        emailDropdownHTML += '<option value=' + emailList[i] + '>' +  emailList[i] + '</option>';
+    }
+
+    emailDropdownHTML += '</selection>'
+
+    document.getElementById('emailSelect').innerHTML = emailDropdownHTML
+}
 

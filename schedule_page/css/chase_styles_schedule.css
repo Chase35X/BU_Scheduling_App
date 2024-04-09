@@ -276,7 +276,7 @@ html, body {
     .dash-text{
       font-size: 0.60em;
     }
-  }
+}
   
 
 #image-container{
@@ -316,4 +316,26 @@ select {
 .popuptext-inside{
    padding: 20px;
    text-align: center;
+}
+
+#emailSelection{
+    display: none;
+    text-align: center;
+}
+
+#emailSelect, #emailInput {
+    width:50%;
+    text-align: center;
+}
+
+@media(min-width: 375px){
+    #emailSelect, #emailInput {
+        width:40%;
+    }
+}
+
+@media(min-width: 500px){
+    #emailSelect, #emailInput {
+        width:30%;
+    }
 }

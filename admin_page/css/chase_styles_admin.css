@@ -1,0 +1,497 @@
+.bold{
+    font-weight:bold;
+}
+
+.nav-link{
+    color: white;
+}
+
+.BURed{
+    background-color: rgb(204, 0, 0);
+}
+
+.borderNavBarColor{
+    border-color:rgb(0, 0, 0, 0.1);
+}
+
+.navbarColor{
+    background-color: rgb(169,169,169);
+}
+
+.latoFont{
+    font-family: 'Lato', sans-serif;
+}
+
+.p-3{
+    color: white;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.gg-trash{
+    margin-left: 5px;
+}
+
+.times{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.days{
+    text-align: center;
+}
+
+.col-test{
+    padding-bottom: 20px;
+}
+
+.reservations, .help, .userInfo{
+    background-color: white;
+    border: 10px solid black;
+    color: black;
+}
+
+.reservationTitle{
+    text-align: left;
+}
+
+.reservationSlot1, .reservationSlot2{
+    text-align: right;
+}
+
+.remove{
+    border: none;
+    background-color: white;
+}
+
+.under_dash_text{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.buttonError {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #cc0000;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.0em;
+    padding: 20px;
+    width: 75%;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .buttonError span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .buttonError span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .buttonError:hover span {
+    padding-right: 25px;
+  }
+  
+  .buttonError:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+  .issueText{
+    font-size: 1.8em;
+    padding-bottom: 1%;
+    color: rgb(114, 114, 114);
+  }
+
+/* @media(max-width: 560px){
+    .days{
+        font-size:0.80em;
+    }
+
+    .times{
+        font-size: 0.50em;
+    }
+} */
+
+.gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+    0 0 0 2px,
+    inset -2px 0 0,
+    inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px
+   }
+   
+   .gg-trash::after,
+   .gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+   }
+   
+   .gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+   }
+   
+   .gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+   } 
+
+
+.circle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 10px;
+}
+
+/* Style for the circle */
+.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #da4f4f; /* Blue color for the circle */
+    border: solid black 2px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 10px; /* Add some space between circle and text */
+}
+
+/* Style for the description text */
+.description {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.accountInfo{
+    text-align: right;
+}
+
+.reservationContainer{
+    text-align: center;
+}
+
+#reservations-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+/* Add some margin between list items if needed */
+#reservations-list li {
+    margin-bottom: 10px;
+}
+
+#delete-btn, #logout-btn {
+    display: inline-block;
+    border-radius: 20px;
+    background-color: #cc0000;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 1.0em;
+    padding: 20px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.logout{
+  padding: 30px;
+}
+
+#delete-btn {
+    opacity: 0.5; /* Reduced opacity to make it less visible */
+    cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+}
+
+/* Style for the Delete button when enabled */
+#delete-btn:not([disabled]) {
+    opacity: 1; /* Full opacity when enabled */
+    cursor: pointer; /* Change cursor to pointer when enabled */
+}
+
+#khc_logo, #spark_logo, #lbsr_logo{
+    height: 100px;
+    width: 100px;
+    margin:15px;
+}
+
+#lbsr_logo{
+    margin-left:7px;
+}
+
+#khc_logo, #lbsr_logo{
+    border-radius: 5px;
+
+}
+
+#image-container{
+    text-align: center;
+}
+
+#partnersText{
+    margin: 10px;
+}
+
+.tooltip {
+    color: black;
+}
+
+.faq-section{
+    width: 100%;
+    padding: 10px;
+    font-size: 29px;
+    border-radius: 25px;
+    margin-left: -13px;
+    margin-right: -13px;
+}
+
+#faq-title{
+    font-size: 29px;
+}
+
+.question {
+    font-size: 19px;
+    padding-right: 20px;
+    padding-left: 10px;
+    text-align: center;
+}
+  
+  html,
+  .root {
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  details[open] summary ~ * {
+    animation: open 0.3s ease-in-out;
+  }
+  
+  @keyframes open {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details summary {
+    width: 100%;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgb(204, 92, 92);
+    position: relative;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 300;
+    list-style: none;
+    padding-right: 15px;
+  }
+  
+  details summary:after {
+    content: "+";
+    color: black;
+    position: absolute;
+    font-size: 1.50rem;
+    line-height: 0;
+    margin-top: 0.75rem;
+    right: 0;
+    font-weight: 200;
+    transform-origin: center;
+    transition: 200ms linear;
+  }
+  details[open] summary:after {
+    transform: rotate(45deg);
+    font-size: 2rem;
+  }
+  details summary {
+    outline: 0;
+  }
+  details p {
+    font-size: 0.95rem;
+    margin: 0 0 1rem;
+    padding-top: 1rem;
+  }
+  
+  .dashButton{
+    font-size:1.2rem;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+  
+  
+  @media screen and (max-width: 407px) {
+    .dashButton{
+      font-size: 1rem;
+    }
+  }
+
+  .numReservation{
+    font-size: 90%;
+    text-align: center;
+  }
+
+  .label{
+    font-size: 70%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    min-width: 50px;
+  }
+
+  .hello, .under_dash_text{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  #i-display{
+    font-size: 75%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    padding: 2px;
+    border: 1px solid black;
+    border-radius: 3px;
+    display: inline-block
+  }
+
+  summary{
+    padding-right: 5px;
+  }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .bottom-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  #image-container{
+    margin-bottom: 100px;
+  }
+
+  .dash-text{
+    font-size: .80em;
+    text-align: center;
+    margin-left: 18px;
+  }
+
+.bottom-navbar{
+  padding-bottom: 25px;
+}
+
+@media (max-width: 350px){
+  .dash-text{
+    font-size: 0.60em;
+  }
+}
+
+.px-4{
+    padding-top: 20px;
+}
+
+#allReservationsSection{
+    margin-bottom: 100px;
+}
+
+.allReservation{
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.cancelAllButton{
+  width: 75%;
+  text-align: center;
+  padding: 5px;
+  vertical-align: middle;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.allReservationButtons{
+  float: right;
+}
+
+.allReservationCreateReservationButton, .allReservationEmailInputBox{
+  padding: 10px;
+  float: right;
+}
+
+.email, .reservationID, .datetime_created{
+  float: left;
+  text-align: left;
+}
+
+.leftSide, .rightSide{
+  float: left;
+}
+
+.linebreak{
+  text-align: left;
+}
+
+#searchButtonContainer{
+  padding: 4px;
+}
+
+#all-reservation-list-container{
+  height: 500px;
+  overflow: scroll;
+}
+
+.logout{
+  margin-top: -125px;
+  margin-bottom: 65px;
+}
+
+@media(max-width: 403px){
+  .allReservation{
+    font-size: 70%;
+  }
+}
