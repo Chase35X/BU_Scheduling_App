@@ -106,7 +106,15 @@ async function login(email, password){
 
             else{
                 if(password.value == user.password){
-                    window.location.href = '/BU_Scheduling_App/admin_page/index.html'
+                    localStorage.setItem('email', email)
+
+                var now = new Date();
+                var time = now.getTime();
+                var expireTime = time + 1000 * 60 * 60 * 24 * 365 // cookie expires in 1 year
+                now.setTime(expireTime);
+
+                document.cookie = "username=" + email +  ";expires=" + now.toUTCString() + ";path=/";
+                window.location.href = '/BU_Scheduling_App/admin_page/index.html'
                 }
 
                 else{
