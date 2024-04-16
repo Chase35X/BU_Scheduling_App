@@ -8,15 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     else if(document.cookie != ''){
-        console.log(document.cookie)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
 
-        cookie = document.cookie
+        email = cookies[0].split('=')
+        email = email[1]
 
-        email_list = cookie.split('=')
-
-        email = email_list[1]
-
-        console.log(email)
+        password = cookies[1].split('=')
+        var password = password[1]
 
         setDashboard()
     }
@@ -140,9 +139,14 @@ async function setDashboard(){
         emailDisplay.innerHTML = localStorage.getItem('email');
         var email = localStorage.getItem('email')
     } else {
-        var email = document.cookie
-        console.log(email)
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
         emailDisplay.innerHTML = email;
     }
 

@@ -25,15 +25,21 @@ addEventListener("DOMContentLoaded", (event) => {
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
     } else {
-        var email = document.cookie
-        console.log(email)
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     document.getElementById('emailSelect').innerHTML = '<option value=' + email + '>' + email + ' (your own email)' + '</option>'
 
     // Location dropdown function that puts in the locations that users are able to reserve
     setLocations()
+    setEmails()
 
 });
 
@@ -911,10 +917,19 @@ var user;
 async function setLocations(){
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
+        console.log(email)
     } else {
-        var email = document.cookie
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
+
+    console.log()
 
     getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
     args = '?arg1=' + email
@@ -928,6 +943,8 @@ async function setLocations(){
     user = await response.json();
 
     var locationHTML = '<option selected value="selection">Select a residance hall...</option>'
+
+    console.log(user)
 
     var locationsList = user.locations
 
@@ -972,11 +989,9 @@ async function getAllEmails(){
     console.log(users)
 
     for(var e = 0; e<users.length;e++) {
-        console.log(users[e].email);
         emails.push(users[e].email);
     }
 
-    console.log(emails);
     
     return emails;
 }
@@ -1045,6 +1060,37 @@ async function onEmailChange(){
         var email = document.cookie
         console.log(email)
         email = email.substring(9)
+    }
+
+    emailDropdownHTML = '<selection><option value=' + email + '>' + email + ' (your own email)</option>'
+    for(var i=0;i<emailList.length;i++){
+        emailDropdownHTML += '<option value=' + emailList[i] + '>' +  emailList[i] + '</option>';
+    }
+
+    emailDropdownHTML += '</selection>'
+
+    document.getElementById('emailSelect').innerHTML = emailDropdownHTML
+}
+
+async function setEmails(){
+    var emails = await getAllEmails();
+    var emailList = [];
+
+    for(var e = 0; e<emails.length;e++) {
+        emailList.push(emails[e])
+    }
+
+    if (localStorage.getItem('email')) {
+        var email = localStorage.getItem('email')
+    } else {
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     emailDropdownHTML = '<selection><option value=' + email + '>' + email + ' (your own email)</option>'
