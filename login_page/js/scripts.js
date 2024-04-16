@@ -107,14 +107,17 @@ async function login(email, password){
             else{
                 if(password.value == user.password){
                     localStorage.setItem('email', email)
+                    localStorage.setItem('password', password.value)
 
-                var now = new Date();
-                var time = now.getTime();
-                var expireTime = time + 1000 * 60 * 60 * 24 * 365 // cookie expires in 1 year
-                now.setTime(expireTime);
+                    var now = new Date();
+                    var time = now.getTime();
+                    var expireTime = time + 1000 * 60 * 60 * 24 * 365 // cookie expires in 1 year
+                    now.setTime(expireTime);
 
-                document.cookie = "username=" + email +  ";expires=" + now.toUTCString() + ";path=/";
-                window.location.href = '/BU_Scheduling_App/admin_page/index.html'
+                    document.cookie = "username=" + email + ";expires=" + now.toUTCString() + ";path=/";
+                    document.cookie = "password=" + password.value + ";expires=" + now.toUTCString() + ";path=/";
+                    console.log(document.cookie.split(';'))
+                    // window.location.href = '/BU_Scheduling_App/admin_page/index.html'
                 }
 
                 else{

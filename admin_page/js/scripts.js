@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         email_list = cookie.split('=')
 
         email = email_list[1]
+        password = email_list[2]
 
         console.log(email)
 
@@ -135,9 +136,19 @@ async function setAdmin(){
 
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
+        var password = localStorage.getItem('password')
+
+        console.log(email)
+        console.log(password)
     } else {
-        var email = document.cookie
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     emailDisplay.innerHTML = email
@@ -155,6 +166,12 @@ async function setAdmin(){
     var accountType = user.role
 
     if(accountType != "admin" && accountType != "founder"){
+        window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
+    }
+
+    var accountPassword = user.password
+
+    if(password != accountPassword){
         window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
 
