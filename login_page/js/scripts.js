@@ -117,7 +117,7 @@ async function login(email, password){
                     document.cookie = "username=" + email + ";expires=" + now.toUTCString() + ";path=/";
                     document.cookie = "password=" + password.value + ";expires=" + now.toUTCString() + ";path=/";
                     console.log(document.cookie.split(';'))
-                    // window.location.href = '/BU_Scheduling_App/admin_page/index.html'
+                    window.location.href = '/BU_Scheduling_App/admin_page/index.html'
                 }
 
                 else{
