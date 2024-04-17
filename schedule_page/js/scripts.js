@@ -65,6 +65,7 @@ async function checkInputs() {
 
         if (localStorage.getItem('email')) {
             var email = localStorage.getItem('email')
+            var password = localStorage.getItem('password')
         } else {
             var cookies = document.cookie.split(';')
             console.log(cookies)
@@ -74,6 +75,9 @@ async function checkInputs() {
 
             password = cookies[1].split('=')
             var password = password[1]
+
+            console.log(email)
+            console.log(password)
         }
 
         getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'

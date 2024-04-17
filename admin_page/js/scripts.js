@@ -509,10 +509,10 @@ function sendFilterError(error){
 
 function logout(){
     localStorage.removeItem("email");
-    localStorage.removeItem("password")
+    localStorage.removeItem("password");
     document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    window.location.href = '/BU_Scheduling_App/login_page/index.html'
+    window.location.href = '/BU_Scheduling_App/login_page/index.html';
 }
 
 var logoutButton = document.getElementById('logout-btn')

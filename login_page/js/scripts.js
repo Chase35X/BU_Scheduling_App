@@ -57,6 +57,7 @@ addEventListener("DOMContentLoaded", (event) => {
 
         email = email_list[1]
 
+        console.log(email)
 
         window.location.href = '/BU_Scheduling_App/dashboard_page/index.html'
     }
