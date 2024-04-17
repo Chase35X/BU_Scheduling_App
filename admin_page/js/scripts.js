@@ -66,9 +66,14 @@ async function deleteSelected() {
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
     } else {
-        var email = document.cookie
-        console.log(email)
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     for (var i = 0; i<checkedValues.length; i++){
@@ -408,9 +413,14 @@ async function remove_all_reservation(){
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
     } else {
-        var email = document.cookie
-        console.log(email)
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     var reservation_id = this.value;

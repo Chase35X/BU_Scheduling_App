@@ -95,7 +95,7 @@ async function login(email, password){
             sendLoginError('not found')
         }
 
-        else if(user.role == 'founder' || user.role == 'administrator'){
+        else if(user.role == 'founder' || user.role == 'admin'){
 
             var password = document.getElementById('password')
             

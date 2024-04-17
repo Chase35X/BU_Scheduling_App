@@ -66,9 +66,14 @@ async function checkInputs() {
         if (localStorage.getItem('email')) {
             var email = localStorage.getItem('email')
         } else {
-            var email = document.cookie
-            console.log(email)
-            email = email.substring(9)
+            var cookies = document.cookie.split(';')
+            console.log(cookies)
+
+            email = cookies[0].split('=')
+            email = email[1]
+
+            password = cookies[1].split('=')
+            var password = password[1]
         }
 
         getUserURL = 'https://us-east-1.aws.data.mongodb-api.com/app/bu_reserve-hmgbd/endpoint/getUser'
@@ -82,9 +87,12 @@ async function checkInputs() {
         
         const user = await response.json() 
         var accountType = user.role;
+        var accountPassword = user.password;
 
         if(accountType == "admin" || accountType == "founder"){
-            document.getElementById("emailSelection").style.display = "block";
+            if(password == accountPassword){
+                document.getElementById("emailSelection").style.display = "block";
+            }
         }
     } else {
         document.getElementById("reservation-boxes").style.display = "none";
@@ -1057,9 +1065,14 @@ async function onEmailChange(){
     if (localStorage.getItem('email')) {
         var email = localStorage.getItem('email')
     } else {
-        var email = document.cookie
-        console.log(email)
-        email = email.substring(9)
+        var cookies = document.cookie.split(';')
+        console.log(cookies)
+
+        email = cookies[0].split('=')
+        email = email[1]
+
+        password = cookies[1].split('=')
+        var password = password[1]
     }
 
     emailDropdownHTML = '<selection><option value=' + email + '>' + email + ' (your own email)</option>'
@@ -1093,7 +1106,7 @@ async function setEmails(){
         var password = password[1]
     }
 
-    emailDropdownHTML = '<selection><option value=' + email + '>' + email + ' (your own email)</option>'
+    emailDropdownHTML = '<selection> <option value=' + email + '>' + email + ' (your own email)</option>'
     for(var i=0;i<emailList.length;i++){
         emailDropdownHTML += '<option value=' + emailList[i] + '>' +  emailList[i] + '</option>';
     }
@@ -1101,5 +1114,9 @@ async function setEmails(){
     emailDropdownHTML += '</selection>'
 
     document.getElementById('emailSelect').innerHTML = emailDropdownHTML
+}
+
+function emailSelectionChange(option){
+    console.log(option)
 }
 
