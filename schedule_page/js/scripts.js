@@ -737,7 +737,7 @@ async function setReservation(){
         sendError('...')
     }
 
-    else if((reservationList.length >= maxReservations) && (role!= 'admin' || role!='founder')){
+    else if((reservationList.length >= maxReservations) && (role != 'admin' || role !='founder')){
         sendError('max_res')
     }
 
